@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -31,4 +32,7 @@ public class LocationController {
     public @ResponseBody Location updateLocation(@RequestBody Location locationToUpdate){
         return locationService.updateLocation(locationToUpdate);
     }
+
+    @GetMapping(path="/fiveLastModified")
+    public List<Map<String, Object>> displayFiveLastModified(){return locationService.getFiveLastModified();}
 }

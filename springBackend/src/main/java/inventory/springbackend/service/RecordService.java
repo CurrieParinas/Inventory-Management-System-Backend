@@ -5,6 +5,9 @@ import inventory.springbackend.repository.RecordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +20,12 @@ public class RecordService {
 
     public Record getRecord(Long recordId){return recordRepository.findByRecordId(recordId);}
 
-    public Record addRecord(Record recordToAdd){return recordRepository.save(recordToAdd);}
+    public Record addRecord(Record recordToAdd){
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        Date date = Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        recordToAdd.setChangeDate(date);
+        return recordRepository.save(recordToAdd);
+    }
     public void deleteRecordById(Long recordId){recordRepository.deleteById(recordId);}
 
     public Record updateRecord(Record recordToUpdate){

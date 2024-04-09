@@ -5,6 +5,9 @@ import inventory.springbackend.repository.MediumRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +20,13 @@ public class MediumService {
 
     public Medium getMedium(Long mediumId){return mediumRepository.findByMediumId(mediumId);}
 
-    public Medium addMedium(Medium mediumToAdd){return mediumRepository.save(mediumToAdd);}
+    public Medium addMedium(Medium mediumToAdd){
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        Date date = Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        mediumToAdd.setCreateDate(date);
+        mediumToAdd.setLastModified(date);
+        return mediumRepository.save(mediumToAdd);
+    }
     public void deleteMediumById(Long mediumId){mediumRepository.deleteById(mediumId);}
 
     public Medium updateMedium(Medium mediumToUpdate){
@@ -44,9 +53,10 @@ public class MediumService {
             if(mediumToUpdate.getPath() != null){
                 existingMedium.setPath(mediumToUpdate.getPath());
             }
-            if(mediumToUpdate.getLastModified() != null){
-                existingMedium.setLastModified(mediumToUpdate.getLastModified());
-            }
+
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            Date date = Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());
+            existingMedium.setLastModified(date);
 
             return mediumRepository.save(existingMedium);
         }

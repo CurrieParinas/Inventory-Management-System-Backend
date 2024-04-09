@@ -5,7 +5,11 @@ import inventory.springbackend.repository.LocationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -17,7 +21,13 @@ public class LocationService {
 
     public Location getLocation(Long locationId){return locationRepository.findByLocationId(locationId);}
 
-    public Location addLocation(Location locationToAdd){return locationRepository.save(locationToAdd);}
+    public Location addLocation(Location locationToAdd){
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        Date date = Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        locationToAdd.setCreateDate(date);
+        locationToAdd.setLastModified(date);
+        return locationRepository.save(locationToAdd);
+    }
     public void deleteLocationById(Long locationId){locationRepository.deleteById(locationId);}
 
     public Location updateLocation(Location locationToUpdate){
@@ -35,12 +45,18 @@ public class LocationService {
             if(locationToUpdate.getImage() != null){
                 existingLocation.setImage(locationToUpdate.getImage());
             }
-            if(locationToUpdate.getLastModified() != null){
-                existingLocation.setLastModified(locationToUpdate.getLastModified());
+            if(locationToUpdate.getParentLocation() != null){
+                existingLocation.setParentLocation(locationToUpdate.getParentLocation());
             }
+
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            Date date = Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());
+            existingLocation.setLastModified(date);
 
             return locationRepository.save(existingLocation);
         }
         return null;
     }
+
+    public List<Map<String, Object>> getFiveLastModified(){return locationRepository.findFiveLastModified();}
 }

@@ -5,6 +5,9 @@ import inventory.springbackend.repository.ItemMediumRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +20,13 @@ public class ItemMediumService {
 
     public ItemMedium getItemMedium(Long itemMediumId){return itemMediumRepository.findByItemMediumId(itemMediumId);}
 
-    public ItemMedium addItemMedium(ItemMedium itemMediumToAdd){return itemMediumRepository.save(itemMediumToAdd);}
+    public ItemMedium addItemMedium(ItemMedium itemMediumToAdd){
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        Date date = Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        itemMediumToAdd.setCreateDate(date);
+        itemMediumToAdd.setLastModified(date);
+        return itemMediumRepository.save(itemMediumToAdd);
+    }
     public void deleteItemMediumById(Long itemMediumId){itemMediumRepository.deleteById(itemMediumId);}
 
     public ItemMedium updateItemMedium(ItemMedium itemMediumToUpdate){
@@ -50,9 +59,10 @@ public class ItemMediumService {
             if(itemMediumToUpdate.getEndConsumptionDate() != null){
                 existingItemMedium.setEndConsumptionDate(itemMediumToUpdate.getEndConsumptionDate());
             }
-            if(itemMediumToUpdate.getLastModified() != null){
-                existingItemMedium.setLastModified(itemMediumToUpdate.getLastModified());
-            }
+
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            Date date = Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());
+            existingItemMedium.setLastModified(date);
 
             return itemMediumRepository.save(existingItemMedium);
         }

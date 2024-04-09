@@ -16,14 +16,14 @@ import java.util.Date;
 @Getter
 public class Password {
     @Id
-    @JsonProperty("password_id")
-    @GeneratedValue(generator = "password_seq")
-    @SequenceGenerator(name="password_seq", sequenceName = "PASSWORD_SEQ", allocationSize = 1)
+    @JsonProperty("PASSWORD_ID")
+    @GeneratedValue(generator = "PASSWORD_SEQ")
+    @SequenceGenerator(name="PASSWORD_SEQ", sequenceName = "PASSWORD_SEQ", allocationSize = 1)
     private Long passwordId;
-    @JsonProperty("password")
+    @JsonProperty("PASSWORD")
     private String password;
-    @JsonProperty("create_date")
+    @JsonProperty("CREATE_DATE")
     private Date createDate;
-    @JsonProperty("last_modified")
+    @JsonProperty("LAST_MODIFIED")
     private Date lastModified;
 }

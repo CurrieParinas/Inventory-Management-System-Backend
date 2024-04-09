@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Blob;
 import java.util.Date;
 
 @Entity(name = "ITEM")
@@ -16,27 +17,27 @@ import java.util.Date;
 @Getter
 public class Item {
     @Id
-    @JsonProperty("item_id")
-    @GeneratedValue(generator = "item_seq")
-    @SequenceGenerator(name="item_seq", sequenceName = "ITEM_SEQ", allocationSize = 1)
+    @JsonProperty("ITEM_ID")
+    @GeneratedValue(generator = "ITEM_SEQ")
+    @SequenceGenerator(name="ITEM_SEQ", sequenceName = "ITEM_SEQ", allocationSize = 1)
     private Long itemId;
-    @JsonProperty("name")
+    @JsonProperty("NAME")
     private String name;
-    @JsonProperty("description")
+    @JsonProperty("DESCRIPTION")
     private String description;
-    @JsonProperty("brand")
+    @JsonProperty("BRAND")
     private String brand;
-    @JsonProperty("codename")
+    @JsonProperty("CODENAME")
     private String codename;
     @Lob
-    @JsonProperty("image")
-    private byte[] image;
-    @JsonProperty("qr_code")
+    @JsonProperty("IMAGE")
+    private Blob image;
+    @JsonProperty("QR_CODE")
     private String qrCode;
-    @JsonProperty("bar_code")
+    @JsonProperty("BAR_CODE")
     private String barCode;
-    @JsonProperty("create_date")
+    @JsonProperty("CREATE_DATE")
     private Date createDate;
-    @JsonProperty("last_modified")
+    @JsonProperty("LAST_MODIFIED")
     private Date lastModified;
 }

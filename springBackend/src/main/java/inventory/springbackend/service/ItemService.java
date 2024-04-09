@@ -5,6 +5,9 @@ import inventory.springbackend.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +20,13 @@ public class ItemService {
 
     public Item getItem(Long itemId){return itemRepository.findByItemId(itemId);}
 
-    public Item addItem(Item itemToAdd){return itemRepository.save(itemToAdd);}
+    public Item addItem(Item itemToAdd){
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        Date date = Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        itemToAdd.setCreateDate(date);
+        itemToAdd.setLastModified(date);
+        return itemRepository.save(itemToAdd);
+    }
     public void deleteItemById(Long itemId){itemRepository.deleteById(itemId);}
 
     public Item updateItem(Item itemToUpdate){
@@ -47,9 +56,10 @@ public class ItemService {
             if(itemToUpdate.getBarCode() != null){
                 existingItem.setBarCode(itemToUpdate.getBarCode());
             }
-            if(itemToUpdate.getLastModified() != null){
-                existingItem.setLastModified(itemToUpdate.getLastModified());
-            }
+
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            Date date = Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());
+            existingItem.setLastModified(date);
 
             return itemRepository.save(existingItem);
         }

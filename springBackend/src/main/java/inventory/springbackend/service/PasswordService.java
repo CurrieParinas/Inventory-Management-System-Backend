@@ -5,6 +5,9 @@ import inventory.springbackend.repository.PasswordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +20,13 @@ public class PasswordService {
 
     public Password getPassword(Long passwordId){return passwordRepository.findByPasswordId(passwordId);}
 
-    public Password addPassword(Password passwordToAdd){return passwordRepository.save(passwordToAdd);}
+    public Password addPassword(Password passwordToAdd){
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        Date date = Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        passwordToAdd.setCreateDate(date);
+        passwordToAdd.setLastModified(date);
+        return passwordRepository.save(passwordToAdd);
+    }
     public void deletePasswordById(Long passwordId){passwordRepository.deleteById(passwordId);}
 
     public Password updatePassword(Password passwordToUpdate){
@@ -29,9 +38,10 @@ public class PasswordService {
             if(passwordToUpdate.getPassword() != null) {
                 existingPassword.setPassword(passwordToUpdate.getPassword());
             }
-            if(passwordToUpdate.getLastModified() != null){
-                existingPassword.setLastModified(passwordToUpdate.getLastModified());
-            }
+
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            Date date = Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());
+            existingPassword.setLastModified(date);
 
             return passwordRepository.save(existingPassword);
         }

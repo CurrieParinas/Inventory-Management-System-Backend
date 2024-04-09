@@ -16,14 +16,14 @@ import java.util.Date;
 @Getter
 public class Record {
     @Id
-    @JsonProperty("record_id")
-    @GeneratedValue(generator = "record_seq")
-    @SequenceGenerator(name="record_seq", sequenceName = "RECORD_SEQ", allocationSize = 1)
+    @JsonProperty("RECORD_ID")
+    @GeneratedValue(generator = "RECORD_SEQ")
+    @SequenceGenerator(name="RECORD_SEQ", sequenceName = "RECORD_SEQ", allocationSize = 1)
     private Long recordId;
-    @JsonProperty("item_medium_id")
+    @JsonProperty("ITEM_MEDIUM_ID")
     private Long itemMediumId;
-    @JsonProperty("quantity_change")
+    @JsonProperty("QUANTITY_CHANGE")
     private String quantityChange;
-    @JsonProperty("change_date")
+    @JsonProperty("CHANGE_DATE")
     private Date changeDate;
 }

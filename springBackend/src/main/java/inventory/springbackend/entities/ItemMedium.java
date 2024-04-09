@@ -16,28 +16,28 @@ import java.util.Date;
 @Getter
 public class ItemMedium {
     @Id
-    @JsonProperty("item_medium_id")
-    @GeneratedValue(generator = "item_medium_seq")
-    @SequenceGenerator(name="item_medium_seq", sequenceName = "ITEM_MEDIUM_SEQ", allocationSize = 1)
+    @JsonProperty("ITEM_MEDIUM_ID")
+    @GeneratedValue(generator = "ITEM_MEDIUM_SEQ")
+    @SequenceGenerator(name="ITEM_MEDIUM_SEQ", sequenceName = "ITEM_MEDIUM_SEQ", allocationSize = 1)
     private Long itemMediumId;
-    @JsonProperty("item_id")
+    @JsonProperty("ITEM_ID")
     private Long itemId;
-    @JsonProperty("medium_id")
+    @JsonProperty("MEDIUM_ID")
     private Long mediumId;
-    @JsonProperty("archive_status")
+    @JsonProperty("ARCHIVE_STATUS")
     private String archiveStatus;
-    @JsonProperty("type")
+    @JsonProperty("TYPE")
     private String type;
-    @JsonProperty("status")
+    @JsonProperty("STATUS")
     private String status;
-    @JsonProperty("quantity")
+    @JsonProperty("QUANTITY")
     private Long quantity;
-    @JsonProperty("start_consumption_date")
+    @JsonProperty("START_CONSUMPTION_DATE")
     private Date startConsumptionDate;
-    @JsonProperty("end_consumption_date")
+    @JsonProperty("END_CONSUMPTION_DATE")
     private Date endConsumptionDate;
-    @JsonProperty("create_date")
+    @JsonProperty("CREATE_DATE")
     private Date createDate;
-    @JsonProperty("last_modified")
+    @JsonProperty("LAST_MODIFIED")
     private Date lastModified;
 }

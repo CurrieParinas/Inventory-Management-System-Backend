@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Blob;
 import java.util.Date;
 
 @Entity(name = "LOCATION")
@@ -16,19 +17,21 @@ import java.util.Date;
 @Getter
 public class Location {
     @Id
-    @JsonProperty("location_id")
-    @GeneratedValue(generator = "location_seq")
-    @SequenceGenerator(name="location_seq", sequenceName = "LOCATION_SEQ", allocationSize = 1)
+    @JsonProperty("LOCATION_ID")
+    @GeneratedValue(generator = "LOCATION_SEQ")
+    @SequenceGenerator(name="LOCATION_SEQ", sequenceName = "LOCATION_SEQ", allocationSize = 1)
     private Long locationId;
-    @JsonProperty("name")
+    @JsonProperty("NAME")
     private String name;
-    @JsonProperty("description")
+    @JsonProperty("DESCRIPTION")
     private String description;
     @Lob
-    @JsonProperty("image")
-    private byte[] image;
-    @JsonProperty("create_date")
+    @JsonProperty("IMAGE")
+    private Blob image;
+    @JsonProperty("PARENT_LOCATION")
+    private Long parentLocation;
+    @JsonProperty("CREATE_DATE")
     private Date createDate;
-    @JsonProperty("last_modified")
+    @JsonProperty("LAST_MODIFIED")
     private Date lastModified;
 }
