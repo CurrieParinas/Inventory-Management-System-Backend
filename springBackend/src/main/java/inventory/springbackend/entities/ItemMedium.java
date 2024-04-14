@@ -20,10 +20,14 @@ public class ItemMedium {
     @GeneratedValue(generator = "ITEM_MEDIUM_SEQ")
     @SequenceGenerator(name="ITEM_MEDIUM_SEQ", sequenceName = "ITEM_MEDIUM_SEQ", allocationSize = 1)
     private Long itemMediumId;
-    @JsonProperty("ITEM_ID")
-    private Long itemId;
-    @JsonProperty("MEDIUM_ID")
-    private Long mediumId;
+    @ManyToOne
+    @JoinColumn(name = "ITEM_ID", referencedColumnName = "ITEM_ID")
+    @JsonProperty("ITEM")
+    private Item item;
+    @ManyToOne
+    @JoinColumn(name = "MEDIUM_ID", referencedColumnName = "MEDIUM_ID")
+    @JsonProperty("MEDIUM")
+    private Medium medium;
     @JsonProperty("ARCHIVE_STATUS")
     private String archiveStatus;
     @JsonProperty("TYPE")

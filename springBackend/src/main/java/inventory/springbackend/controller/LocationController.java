@@ -34,5 +34,5 @@ public class LocationController {
     }
 
     @GetMapping(path="/fiveLastModified")
-    public List<Map<String, Object>> displayFiveLastModified(){return locationService.getFiveLastModified();}
+    public List<Location> displayFiveLastModified(){return locationService.getFiveLastModified();}
 }

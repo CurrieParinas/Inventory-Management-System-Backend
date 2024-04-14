@@ -58,5 +58,5 @@ public class LocationService {
         return null;
     }
 
-    public List<Map<String, Object>> getFiveLastModified(){return locationRepository.findFiveLastModified();}
+    public List<Location> getFiveLastModified(){return locationRepository.findFiveLastModified();}
 }

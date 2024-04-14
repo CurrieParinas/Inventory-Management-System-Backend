@@ -1,5 +1,6 @@
 package inventory.springbackend.controller;
 
+import inventory.springbackend.entities.Location;
 import inventory.springbackend.entities.Medium;
 import inventory.springbackend.service.MediumService;
 import lombok.RequiredArgsConstructor;
@@ -31,4 +32,7 @@ public class MediumController {
     public @ResponseBody Medium updateMedium(@RequestBody Medium mediumToUpdate){
         return mediumService.updateMedium(mediumToUpdate);
     }
+
+    @GetMapping(path="/fiveLastModified")
+    public List<Medium> displayFiveLastModified(){return mediumService.getFiveLastModified();}
 }

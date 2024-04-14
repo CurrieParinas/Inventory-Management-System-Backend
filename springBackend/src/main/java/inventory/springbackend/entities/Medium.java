@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.sql.Blob;
 import java.util.Date;
+import java.util.List;
 
 @Entity(name = "MEDIUM")
 @RequiredArgsConstructor
@@ -20,6 +21,7 @@ public class Medium {
     @JsonProperty("MEDIUM_ID")
     @GeneratedValue(generator = "MEDIUM_SEQ")
     @SequenceGenerator(name="MEDIUM_SEQ", sequenceName = "MEDIUM_SEQ", allocationSize = 1)
+    @Column(name = "MEDIUM_ID")
     private Long mediumId;
     @JsonProperty("NAME")
     private String name;
@@ -40,4 +42,6 @@ public class Medium {
     private Date createDate;
     @JsonProperty("LAST_MODIFIED")
     private Date lastModified;
+    @OneToMany(mappedBy = "medium")
+    private List<ItemMedium> itemMedia;
 }

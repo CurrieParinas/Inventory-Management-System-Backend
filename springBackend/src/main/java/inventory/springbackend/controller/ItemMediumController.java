@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -31,4 +32,10 @@ public class ItemMediumController {
     public @ResponseBody ItemMedium updateItemMedium(@RequestBody ItemMedium itemMediumToUpdate){
         return itemMediumService.updateItemMedium(itemMediumToUpdate);
     }
+
+    @GetMapping(path="/fiveLastModifiedUntracked")
+    public List<Map<String, Object>> displayFiveLastModifiedUntracked(){return itemMediumService.getFiveLastModifiedUntracked();}
+
+    @GetMapping(path="/fiveLastModifiedTracked")
+    public List<Map<String, Object>> displayFiveLastModifiedTracked(){return itemMediumService.getFiveLastModifiedTracked();}
 }

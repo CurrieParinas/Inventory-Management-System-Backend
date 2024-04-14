@@ -18,5 +18,5 @@ public interface LocationRepository extends JpaRepository<Location,Long> {
                     "FETCH FIRST 5 ROWS ONLY",
             nativeQuery = true
     )
-    List<Map<String, Object>> findFiveLastModified();
+    List<Location> findFiveLastModified();
 }

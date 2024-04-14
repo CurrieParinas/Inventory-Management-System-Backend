@@ -1,5 +1,6 @@
 package inventory.springbackend.service;
 
+import inventory.springbackend.entities.Location;
 import inventory.springbackend.entities.Medium;
 import inventory.springbackend.repository.MediumRepository;
 import lombok.RequiredArgsConstructor;
@@ -62,4 +63,6 @@ public class MediumService {
         }
         return null;
     }
+
+    public List<Medium> getFiveLastModified(){return mediumRepository.findFiveLastModified();}
 }

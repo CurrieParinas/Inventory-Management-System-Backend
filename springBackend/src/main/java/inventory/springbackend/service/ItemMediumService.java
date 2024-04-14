@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -35,12 +36,6 @@ public class ItemMediumService {
         if(optionalExistingItemMedium.isPresent()){
             ItemMedium existingItemMedium = optionalExistingItemMedium.get();
 
-            if(itemMediumToUpdate.getItemId() != null){
-                existingItemMedium.setItemId(itemMediumToUpdate.getItemId());
-            }
-            if(itemMediumToUpdate.getMediumId() != null){
-                existingItemMedium.setMediumId(itemMediumToUpdate.getMediumId());
-            }
             if(itemMediumToUpdate.getArchiveStatus() != null){
                 existingItemMedium.setArchiveStatus(itemMediumToUpdate.getArchiveStatus());
             }
@@ -68,4 +63,8 @@ public class ItemMediumService {
         }
         return null;
     }
+
+    public List<Map<String, Object>> getFiveLastModifiedUntracked(){return itemMediumRepository.findFiveLastModifiedUntracked();}
+
+    public List<Map<String, Object>> getFiveLastModifiedTracked(){return itemMediumRepository.findFiveLastModifiedTracked();}
 }
