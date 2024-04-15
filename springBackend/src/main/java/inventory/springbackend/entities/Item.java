@@ -42,6 +42,4 @@ public class Item {
     private Date createDate;
     @JsonProperty("LAST_MODIFIED")
     private Date lastModified;
-    @OneToMany(mappedBy = "item")
-    private List<ItemMedium> itemMedia;
 }

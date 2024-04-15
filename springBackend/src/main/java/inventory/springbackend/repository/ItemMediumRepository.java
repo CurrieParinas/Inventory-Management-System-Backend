@@ -12,7 +12,7 @@ public interface ItemMediumRepository extends JpaRepository<ItemMedium,Long> {
         ItemMedium findByItemMediumId(Long itemMediumId);
 
         @Query(
-                value = "SELECT * " +
+                value = "SELECT IM.ITEM_MEDIUM_ID, I.NAME, I.DESCRIPTION, I.BRAND, IM.QUANTITY " +
                         "FROM ITEM_MEDIUM IM JOIN ITEM I ON IM.ITEM_ID = I.ITEM_ID " +
                         "WHERE IM.TYPE = 'U' " +
                         "ORDER BY IM.LAST_MODIFIED DESC " +
@@ -22,7 +22,7 @@ public interface ItemMediumRepository extends JpaRepository<ItemMedium,Long> {
         List<Map<String, Object>> findFiveLastModifiedUntracked();
 
         @Query(
-                value = "SELECT * " +
+                value = "SELECT IM.ITEM_MEDIUM_ID, I.NAME, I.DESCRIPTION, I.BRAND, IM.QUANTITY " +
                         "FROM ITEM_MEDIUM IM JOIN ITEM I ON IM.ITEM_ID = I.ITEM_ID " +
                         "WHERE IM.TYPE = 'R' OR IM.TYPE = 'C' " +
                         "ORDER BY IM.LAST_MODIFIED DESC " +
