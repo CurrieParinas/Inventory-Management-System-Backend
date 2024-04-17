@@ -38,4 +38,10 @@ public class ItemMediumController {
 
     @GetMapping(path="/fiveLastModifiedTracked")
     public List<Map<String, Object>> displayFiveLastModifiedTracked(){return itemMediumService.getFiveLastModifiedTracked();}
+
+    @GetMapping(path="/allUntracked")
+    public List<Map<String, Object>> displayAllUntracked(){return itemMediumService.getAllUntracked();}
+
+    @GetMapping(path="/allTracked")
+    public List<Map<String, Object>> displayAllTracked(){return itemMediumService.getAllTracked();}
 }

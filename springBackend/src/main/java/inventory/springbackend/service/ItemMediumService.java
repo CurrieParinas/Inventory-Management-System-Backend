@@ -67,4 +67,8 @@ public class ItemMediumService {
     public List<Map<String, Object>> getFiveLastModifiedUntracked(){return itemMediumRepository.findFiveLastModifiedUntracked();}
 
     public List<Map<String, Object>> getFiveLastModifiedTracked(){return itemMediumRepository.findFiveLastModifiedTracked();}
+
+    public List<Map<String, Object>> getAllUntracked(){return itemMediumRepository.findAllUntrackedItems();}
+
+    public List<Map<String, Object>> getAllTracked(){return itemMediumRepository.findAllTrackedItems();}
 }
