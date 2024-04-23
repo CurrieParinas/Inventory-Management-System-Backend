@@ -1,10 +1,13 @@
 package inventory.springbackend.controller;
 
+import com.google.zxing.WriterException;
 import inventory.springbackend.entities.Item;
 import inventory.springbackend.service.ItemService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 @CrossOrigin
 @RestController
@@ -29,5 +32,10 @@ public class ItemController {
     @PostMapping(path="/update")
     public @ResponseBody Item updateItem(@RequestBody Item itemToUpdate){
         return itemService.updateItem(itemToUpdate);
+    }
+
+    @GetMapping(produces = MediaType.IMAGE_PNG_VALUE, path = "/showQR")
+    public byte[] showQRCode() throws WriterException, IOException {
+        return itemService.generateQRCode();
     }
 }
