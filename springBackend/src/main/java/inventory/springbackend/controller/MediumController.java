@@ -1,11 +1,14 @@
 package inventory.springbackend.controller;
 
+import com.google.zxing.WriterException;
 import inventory.springbackend.entities.Location;
 import inventory.springbackend.entities.Medium;
 import inventory.springbackend.service.MediumService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @CrossOrigin
@@ -35,4 +38,9 @@ public class MediumController {
 
     @GetMapping(path="/fiveLastModified")
     public List<Medium> displayFiveLastModified(){return mediumService.getFiveLastModified();}
+
+    @GetMapping(produces = MediaType.IMAGE_PNG_VALUE, path = "/showQR/{mediumId}")
+    public byte[] showQRCode(@PathVariable Long mediumId) throws WriterException, IOException {
+        return mediumService.generateQRCode(mediumId);
+    }
 }

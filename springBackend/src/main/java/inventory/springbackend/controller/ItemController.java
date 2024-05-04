@@ -34,8 +34,8 @@ public class ItemController {
         return itemService.updateItem(itemToUpdate);
     }
 
-    @GetMapping(produces = MediaType.IMAGE_PNG_VALUE, path = "/showQR")
-    public byte[] showQRCode() throws WriterException, IOException {
-        return itemService.generateQRCode();
+    @GetMapping(produces = MediaType.IMAGE_PNG_VALUE, path = "/showQR/{itemId}")
+    public byte[] showQRCode(@PathVariable Long itemId) throws WriterException, IOException {
+        return itemService.generateQRCode(itemId);
     }
 }

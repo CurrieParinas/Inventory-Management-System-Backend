@@ -15,6 +15,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -75,24 +76,31 @@ public class ItemService {
         return null;
     }
 
-    public byte[] generateQRCode() throws WriterException, IOException {
+    public byte[] generateQRCode(Long itemId) throws WriterException, IOException {
         int width = 200;
         int height = 200;
-        String text="imysm";
 
-        QRCodeWriter qrCodeWriter = new QRCodeWriter();
-        BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
+        Optional<Item> optionalExistingItem = itemRepository.findById(itemId);
 
-        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                bufferedImage.setRGB(x, y, bitMatrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
+        if(optionalExistingItem.isPresent()) {
+            Item existingItem = optionalExistingItem.get();
+            String text = "ID: " + existingItem.getItemId() + "\nNAME: " + existingItem.getName() + "\nBRAND: " + existingItem.getBrand() + "\nDESCRIPTION: " + existingItem.getDescription() + "\nTYPE: ITEM";
+
+            QRCodeWriter qrCodeWriter = new QRCodeWriter();
+            BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
+
+            BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+            for (int x = 0; x < width; x++) {
+                for (int y = 0; y < height; y++) {
+                    bufferedImage.setRGB(x, y, bitMatrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
+                }
             }
+
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            ImageIO.write(bufferedImage, "png", byteArrayOutputStream);
+
+            return byteArrayOutputStream.toByteArray();
         }
-
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        ImageIO.write(bufferedImage, "png", byteArrayOutputStream);
-
-        return byteArrayOutputStream.toByteArray();
+        return null;
     }
 }
