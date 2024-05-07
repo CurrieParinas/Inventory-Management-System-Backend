@@ -38,4 +38,9 @@ public class ItemController {
     public byte[] showQRCode(@PathVariable Long itemId) throws WriterException, IOException {
         return itemService.generateQRCode(itemId);
     }
+
+    @GetMapping(produces = MediaType.IMAGE_PNG_VALUE, path = "/showBar/{itemId}")
+    public byte[] showBarcode(@PathVariable Long itemId) throws WriterException, IOException {
+        return itemService.generateBarcode(itemId);
+    }
 }

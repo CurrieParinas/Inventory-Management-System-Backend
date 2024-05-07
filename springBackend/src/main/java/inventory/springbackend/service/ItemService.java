@@ -1,5 +1,6 @@
 package inventory.springbackend.service;
 
+import com.google.zxing.oned.Code128Writer;
 import inventory.springbackend.entities.Item;
 import inventory.springbackend.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -84,10 +85,38 @@ public class ItemService {
 
         if(optionalExistingItem.isPresent()) {
             Item existingItem = optionalExistingItem.get();
-            String text = "ID: " + existingItem.getItemId() + "\nNAME: " + existingItem.getName() + "\nBRAND: " + existingItem.getBrand() + "\nDESCRIPTION: " + existingItem.getDescription() + "\nTYPE: ITEM";
+            String text = "ID: " + existingItem.getItemId() + "\nNAME: " + existingItem.getName() + "\nBRAND: " + existingItem.getBrand() + "\nDESCRIPTION: " + existingItem.getDescription();
 
             QRCodeWriter qrCodeWriter = new QRCodeWriter();
             BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
+
+            BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+            for (int x = 0; x < width; x++) {
+                for (int y = 0; y < height; y++) {
+                    bufferedImage.setRGB(x, y, bitMatrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
+                }
+            }
+
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            ImageIO.write(bufferedImage, "png", byteArrayOutputStream);
+
+            return byteArrayOutputStream.toByteArray();
+        }
+        return null;
+    }
+
+    public byte[] generateBarcode(Long itemId) throws WriterException, IOException {
+        int width = 200;
+        int height = 200;
+
+        Optional<Item> optionalExistingItem = itemRepository.findById(itemId);
+
+        if(optionalExistingItem.isPresent()) {
+            Item existingItem = optionalExistingItem.get();
+            String text = "ID: " + existingItem.getItemId() + "\nNAME: " + existingItem.getName() + "\nBRAND: " + existingItem.getBrand() + "\nDESCRIPTION: " + existingItem.getDescription() + "\nTYPE: ITEM";
+
+            Code128Writer barcodeWriter = new Code128Writer();
+            BitMatrix bitMatrix = barcodeWriter.encode(text, BarcodeFormat.CODE_128, width, height);
 
             BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
             for (int x = 0; x < width; x++) {
