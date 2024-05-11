@@ -6,6 +6,8 @@ import inventory.springbackend.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -16,8 +18,10 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
+import javax.sql.rowset.serial.SerialBlob;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -31,12 +35,24 @@ public class ItemService {
 
     public Item getItem(Long itemId){return itemRepository.findByItemId(itemId);}
 
-    public Item addItem(Item itemToAdd){
+    public Item addItem(String name, String description, String brand, String codename, MultipartFile image) throws IOException {
+
+        Item item = new Item();
+        item.setItemId(null);
+        item.setName(name);
+        item.setDescription(description);
+        item.setBrand(brand);
+        item.setCodename(codename);
+
+        byte[] imageData = image.getBytes();
+        item.setImage(imageData);
+
         LocalDateTime currentDateTime = LocalDateTime.now();
         Date date = Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());
-        itemToAdd.setCreateDate(date);
-        itemToAdd.setLastModified(date);
-        return itemRepository.save(itemToAdd);
+        item.setCreateDate(date);
+        item.setLastModified(date);
+
+        return itemRepository.save(item);
     }
     public void deleteItemById(Long itemId){itemRepository.deleteById(itemId);}
 
