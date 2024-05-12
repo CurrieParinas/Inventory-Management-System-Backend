@@ -1,10 +1,15 @@
 package inventory.springbackend.controller;
 
+import inventory.springbackend.entities.Item;
 import inventory.springbackend.entities.Location;
 import inventory.springbackend.service.LocationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -21,8 +26,11 @@ public class LocationController {
     public Location getLocation(@PathVariable Long locationId){return locationService.getLocation(locationId);}
 
     @PostMapping(path= "/add")
-    public @ResponseBody Location addLocation(@RequestBody Location locationToAdd){
-        return locationService.addLocation(locationToAdd);
+    public Location addLocation(@RequestParam("NAME") String name,
+                                @RequestParam("DESCRIPTION") String description,
+                                @RequestParam("PARENT_LOCATION") Long parentLocation,
+                                @RequestPart("IMAGE") MultipartFile imageFile) throws IOException {
+        return locationService.addLocation(name, description, parentLocation, imageFile);
     }
 
     @PostMapping(path="/delete/{locationId}")
@@ -35,4 +43,13 @@ public class LocationController {
 
     @GetMapping(path="/fiveLastModified")
     public List<Location> displayFiveLastModified(){return locationService.getFiveLastModified();}
+
+    @GetMapping(produces = MediaType.IMAGE_JPEG_VALUE, path="/showImage/{locationId}")
+    public ResponseEntity<byte[]> showLocationImage(@PathVariable Long locationId) {
+        Location location = locationService.getLocation(locationId);
+        if (location.getImage() != null) {
+            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(location.getImage());
+        }
+        return ResponseEntity.notFound().build();
+    }
 }

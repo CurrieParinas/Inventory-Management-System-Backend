@@ -27,7 +27,7 @@ public class Location {
     private String description;
     @Lob
     @JsonProperty("IMAGE")
-    private Blob image;
+    private byte[] image;
     @JsonProperty("PARENT_LOCATION")
     private Long parentLocation;
     @JsonProperty("CREATE_DATE")

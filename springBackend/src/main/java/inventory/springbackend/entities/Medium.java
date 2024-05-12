@@ -29,7 +29,7 @@ public class Medium {
     private String description;
     @Lob
     @JsonProperty("IMAGE")
-    private Blob image;
+    private byte[] image;
     @JsonProperty("QR_CODE")
     private String qrCode;
     @JsonProperty("PARENT_LOCATION")

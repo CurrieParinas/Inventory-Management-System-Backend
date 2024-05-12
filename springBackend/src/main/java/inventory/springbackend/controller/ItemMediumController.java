@@ -44,4 +44,7 @@ public class ItemMediumController {
 
     @GetMapping(path="/allTracked")
     public List<Map<String, Object>> displayAllTracked(){return itemMediumService.getAllTracked();}
+
+    @GetMapping(path="/allArchived")
+    public List<ItemMedium> displayAllArchived(){return itemMediumService.getAllArchived();}
 }

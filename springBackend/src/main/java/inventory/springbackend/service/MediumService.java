@@ -4,12 +4,11 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
-import inventory.springbackend.entities.Item;
-import inventory.springbackend.entities.Location;
 import inventory.springbackend.entities.Medium;
 import inventory.springbackend.repository.MediumRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -30,12 +29,32 @@ public class MediumService {
 
     public Medium getMedium(Long mediumId){return mediumRepository.findByMediumId(mediumId);}
 
-    public Medium addMedium(Medium mediumToAdd){
+    public Medium addMedium(String name, String description, Long parentLocation, Long parentMedium, MultipartFile image) throws IOException {
+
+        Medium med = new Medium();
+        med.setMediumId(null);
+        med.setName(name);
+        med.setDescription(description);
+        med.setParentLocation(parentLocation);
+        med.setParentMediumId(parentMedium);
+
+        if (parentMedium != null) {
+            Medium parent = mediumRepository.findByMediumId(parentMedium);
+            if (parent.getPath() != null) {
+                med.setPath(parent.getPath() + "," + parent.getMediumId());
+            } else {
+                med.setPath(String.valueOf(parent.getMediumId()));
+            }
+        }
+
+        byte[] imageData = image.getBytes();
+        med.setImage(imageData);
+
         LocalDateTime currentDateTime = LocalDateTime.now();
         Date date = Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());
-        mediumToAdd.setCreateDate(date);
-        mediumToAdd.setLastModified(date);
-        return mediumRepository.save(mediumToAdd);
+        med.setCreateDate(date);
+        med.setLastModified(date);
+        return mediumRepository.save(med);
     }
     public void deleteMediumById(Long mediumId){mediumRepository.deleteById(mediumId);}
 

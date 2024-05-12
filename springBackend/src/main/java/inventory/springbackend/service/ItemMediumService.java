@@ -71,4 +71,6 @@ public class ItemMediumService {
     public List<Map<String, Object>> getAllUntracked(){return itemMediumRepository.findAllUntrackedItems();}
 
     public List<Map<String, Object>> getAllTracked(){return itemMediumRepository.findAllTrackedItems();}
+
+    public List<ItemMedium> getAllArchived(){return itemMediumRepository.findByArchiveStatus("A");}
 }

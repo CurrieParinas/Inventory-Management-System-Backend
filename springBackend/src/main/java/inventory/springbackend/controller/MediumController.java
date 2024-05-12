@@ -6,7 +6,9 @@ import inventory.springbackend.entities.Medium;
 import inventory.springbackend.service.MediumService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,8 +26,12 @@ public class MediumController {
     public Medium getMedium(@PathVariable Long mediumId){return mediumService.getMedium(mediumId);}
 
     @PostMapping(path= "/add")
-    public @ResponseBody Medium addMedium(@RequestBody Medium mediumToAdd){
-        return mediumService.addMedium(mediumToAdd);
+    public Medium addMedium(@RequestParam("NAME") String name,
+                            @RequestParam("DESCRIPTION") String description,
+                            @RequestParam("PARENT_LOCATION") Long parentLocation,
+                            @RequestParam("PARENT_MEDIUM_ID") Long parentMedium,
+                            @RequestPart("IMAGE") MultipartFile imageFile) throws IOException {
+        return mediumService.addMedium(name, description, parentLocation, parentMedium, imageFile);
     }
 
     @PostMapping(path="/delete/{mediumId}")
@@ -42,5 +48,14 @@ public class MediumController {
     @GetMapping(produces = MediaType.IMAGE_PNG_VALUE, path = "/showQR/{mediumId}")
     public byte[] showQRCode(@PathVariable Long mediumId) throws WriterException, IOException {
         return mediumService.generateQRCode(mediumId);
+    }
+
+    @GetMapping(produces = MediaType.IMAGE_JPEG_VALUE, path="/showImage/{mediumId}")
+    public ResponseEntity<byte[]> showMediumImage(@PathVariable Long mediumId) {
+        Medium medium = mediumService.getMedium(mediumId);
+        if (medium.getImage() != null) {
+            return  ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(medium.getImage());
+        }
+        return ResponseEntity.notFound().build();
     }
 }
