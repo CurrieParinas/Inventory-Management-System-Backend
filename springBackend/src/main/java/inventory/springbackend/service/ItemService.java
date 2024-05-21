@@ -129,7 +129,7 @@ public class ItemService {
 
         if(optionalExistingItem.isPresent()) {
             Item existingItem = optionalExistingItem.get();
-            String text = "ID: " + existingItem.getItemId() + "\nNAME: " + existingItem.getName() + "\nBRAND: " + existingItem.getBrand() + "\nDESCRIPTION: " + existingItem.getDescription() + "\nTYPE: ITEM";
+            String text = String.valueOf(existingItem.getItemId());
 
             Code128Writer barcodeWriter = new Code128Writer();
             BitMatrix bitMatrix = barcodeWriter.encode(text, BarcodeFormat.CODE_128, width, height);
