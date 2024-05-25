@@ -102,7 +102,7 @@ public class MediumService {
 
         if(optionalExistingMedium.isPresent()) {
             Medium existingMedium = optionalExistingMedium.get();
-            String text = "ID: " + existingMedium.getMediumId() + "\nNAME: " + existingMedium.getName() + "\nDESCRIPTION: " + existingMedium.getDescription() + "\nTYPE: STORAGE MEDIUM";
+            String text = "ID: " + existingMedium.getMediumId() + "\nNAME: " + existingMedium.getName() + "\nDESCRIPTION: " + existingMedium.getDescription() + "\nTYPE: Storage Medium";
 
             QRCodeWriter qrCodeWriter = new QRCodeWriter();
             BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
