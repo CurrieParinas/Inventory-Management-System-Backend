@@ -54,4 +54,12 @@ public interface ItemMediumRepository extends JpaRepository<ItemMedium,Long> {
         List<Map<String, Object>> findAllTrackedItems();
 
         List<ItemMedium> findByArchiveStatus(String archiveStatus);
+
+        @Query(
+                value = "SELECT IM.* " +
+                        "FROM ITEM_MEDIUM IM " +
+                        "WHERE IM.ITEM_ID = ?",
+                nativeQuery = true
+        )
+        List<Map<String, Object>> findItemMediumsWithItemID(Long itemId);
 }

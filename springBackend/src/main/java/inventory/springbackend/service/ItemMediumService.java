@@ -73,4 +73,6 @@ public class ItemMediumService {
     public List<Map<String, Object>> getAllTracked(){return itemMediumRepository.findAllTrackedItems();}
 
     public List<ItemMedium> getAllArchived(){return itemMediumRepository.findByArchiveStatus("A");}
+
+    public List<Map<String, Object>> getItemMediumWithItemID(Long itemId){return itemMediumRepository.findItemMediumsWithItemID(itemId);}
 }
