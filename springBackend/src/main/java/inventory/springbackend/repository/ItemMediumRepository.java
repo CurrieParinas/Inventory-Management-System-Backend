@@ -65,8 +65,10 @@ public interface ItemMediumRepository extends JpaRepository<ItemMedium,Long> {
         List<Map<String, Object>> findAllArchivedItems();
 
         @Query(
-                value = "SELECT IM.* " +
-                        "FROM ITEM_MEDIUM IM " +
+                value = "SELECT IM.*, I.NAME AS NAME, M.NAME AS MEDIUM_NAME, L.NAME AS LOCATION_NAME " +
+                        "FROM ITEM_MEDIUM IM JOIN ITEM I ON IM.ITEM_ID = I.ITEM_ID " +
+                        "                    JOIN MEDIUM M ON IM.MEDIUM_ID = M.MEDIUM_ID " +
+                        "                    JOIN LOCATION L ON M.PARENT_LOCATION = L.LOCATION_ID " +
                         "WHERE IM.ITEM_ID = ?",
                 nativeQuery = true
         )
