@@ -46,8 +46,13 @@ public class ItemMediumController {
     public List<Map<String, Object>> displayAllTracked(){return itemMediumService.getAllTracked();}
 
     @GetMapping(path="/allArchived")
-    public List<ItemMedium> displayAllArchived(){return itemMediumService.getAllArchived();}
+    public List<Map<String, Object>> displayAllArchived(){return itemMediumService.getAllArchived();}
 
     @GetMapping(path="/itemId/{itemId}")
     public List<Map<String, Object>> displayItemMediumWithItemId(@PathVariable Long itemId){return itemMediumService.getItemMediumWithItemID(itemId);}
+
+    @PostMapping(path="/setArchived/{itemId}")
+    public ItemMedium setArchived(@PathVariable Long itemId) {
+        return itemMediumService.setArchived(itemId);
+    }
 }

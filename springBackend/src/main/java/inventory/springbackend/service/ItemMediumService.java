@@ -72,7 +72,19 @@ public class ItemMediumService {
 
     public List<Map<String, Object>> getAllTracked(){return itemMediumRepository.findAllTrackedItems();}
 
-    public List<ItemMedium> getAllArchived(){return itemMediumRepository.findByArchiveStatus("A");}
+    public List<Map<String, Object>> getAllArchived(){return itemMediumRepository.findAllArchivedItems();}
 
     public List<Map<String, Object>> getItemMediumWithItemID(Long itemId){return itemMediumRepository.findItemMediumsWithItemID(itemId);}
+
+    public ItemMedium setArchived(Long itemId){
+        Optional<ItemMedium> optionalExistingItemMedium = itemMediumRepository.findById(itemId);
+
+        if(optionalExistingItemMedium.isPresent()){
+            ItemMedium existingItemMedium = optionalExistingItemMedium.get();
+            existingItemMedium.setArchiveStatus("A");
+
+            return itemMediumRepository.save(existingItemMedium);
+        }
+        return null;
+    }
 }

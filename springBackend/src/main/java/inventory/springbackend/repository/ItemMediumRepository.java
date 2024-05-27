@@ -47,13 +47,22 @@ public interface ItemMediumRepository extends JpaRepository<ItemMedium,Long> {
                         "FROM ITEM_MEDIUM IM JOIN ITEM I ON IM.ITEM_ID = I.ITEM_ID " +
                         "                    JOIN MEDIUM M on IM.MEDIUM_ID = M.MEDIUM_ID " +
                         "                    JOIN LOCATION L ON M.PARENT_LOCATION = L.LOCATION_ID " +
-                        "WHERE IM.TYPE = 'R' OR IM.TYPE = 'C' AND IM.ARCHIVE_STATUS = 'V' " +
+                        "WHERE (IM.TYPE = 'R' OR IM.TYPE = 'C') AND IM.ARCHIVE_STATUS = 'V' " +
                         "ORDER BY ITEM_MEDIUM_ID",
                 nativeQuery = true
         )
         List<Map<String, Object>> findAllTrackedItems();
 
-        List<ItemMedium> findByArchiveStatus(String archiveStatus);
+        @Query(
+                value = "SELECT ITEM_MEDIUM_ID, I.NAME, I.CODENAME, I.BRAND, IM.QUANTITY, M.NAME AS MEDIUM_NAME, L.NAME AS LOCATION_NAME, IM.CREATE_DATE, IM.LAST_MODIFIED " +
+                        "FROM ITEM_MEDIUM IM JOIN ITEM I ON IM.ITEM_ID = I.ITEM_ID " +
+                        "                    JOIN MEDIUM M on IM.MEDIUM_ID = M.MEDIUM_ID " +
+                        "                    JOIN LOCATION L ON M.PARENT_LOCATION = L.LOCATION_ID " +
+                        "WHERE IM.ARCHIVE_STATUS = 'A' " +
+                        "ORDER BY ITEM_MEDIUM_ID",
+                nativeQuery = true
+        )
+        List<Map<String, Object>> findAllArchivedItems();
 
         @Query(
                 value = "SELECT IM.* " +
