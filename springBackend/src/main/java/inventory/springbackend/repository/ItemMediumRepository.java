@@ -73,4 +73,17 @@ public interface ItemMediumRepository extends JpaRepository<ItemMedium,Long> {
                 nativeQuery = true
         )
         List<Map<String, Object>> findItemMediumsWithItemID(Long itemId);
+
+        @Query(
+                value = "SELECT IM.* " +
+                        "FROM ITEM_MEDIUM IM " +
+                        "WHERE IM.MEDIUM_ID IN ( " +
+                        "    SELECT M.MEDIUM_ID " +
+                        "    FROM MEDIUM M\n" +
+                        "    START WITH M.MEDIUM_ID = ? " +
+                        "    CONNECT BY PRIOR M.MEDIUM_ID = M.PARENT_MEDIUM " +
+                        ")",
+                nativeQuery = true
+        )
+        List<Map<String, Object>> findItemMediumsInMedium(Long mediumId);
 }

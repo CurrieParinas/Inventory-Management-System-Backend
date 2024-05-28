@@ -55,4 +55,7 @@ public class ItemMediumController {
     public ItemMedium setArchived(@PathVariable Long itemId) {
         return itemMediumService.setArchived(itemId);
     }
+
+    @GetMapping(path="/mediumId/{mediumId}")
+    public List<Map<String, Object>> displayItemMediumInMedium(@PathVariable Long mediumId){return itemMediumService.getItemMediumInMedium(mediumId);}
 }

@@ -87,4 +87,6 @@ public class ItemMediumService {
         }
         return null;
     }
+
+    public List<Map<String, Object>> getItemMediumInMedium(Long mediumId){return itemMediumRepository.findItemMediumsInMedium(mediumId);}
 }
