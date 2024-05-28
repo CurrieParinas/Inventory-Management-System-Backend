@@ -20,6 +20,7 @@ public class Location {
     @JsonProperty("LOCATION_ID")
     @GeneratedValue(generator = "LOCATION_SEQ")
     @SequenceGenerator(name="LOCATION_SEQ", sequenceName = "LOCATION_SEQ", allocationSize = 1)
+    @Column(name = "LOCATION_ID")
     private Long locationId;
     @JsonProperty("NAME")
     private String name;
@@ -28,8 +29,10 @@ public class Location {
     @Lob
     @JsonProperty("IMAGE")
     private byte[] image;
+    @ManyToOne
+    @JoinColumn(name = "PARENT_LOCATION", referencedColumnName = "LOCATION_ID")
     @JsonProperty("PARENT_LOCATION")
-    private Long parentLocation;
+    private Location parentLocation;
     @JsonProperty("CREATE_DATE")
     private Date createDate;
     @JsonProperty("LAST_MODIFIED")

@@ -28,7 +28,7 @@ public class LocationService {
         loc.setLocationId(null);
         loc.setName(name);
         loc.setDescription(description);
-        loc.setParentLocation(parentLocation);
+        loc.setParentLocation(locationRepository.findByLocationId(parentLocation));
 
         byte[] imageData = image.getBytes();
         loc.setImage(imageData);
