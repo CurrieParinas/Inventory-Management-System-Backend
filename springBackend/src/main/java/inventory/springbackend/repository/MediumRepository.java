@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Map;
 
 public interface MediumRepository extends JpaRepository<Medium,Long> {
 
@@ -19,4 +20,6 @@ public interface MediumRepository extends JpaRepository<Medium,Long> {
             nativeQuery = true
     )
     List<Medium> findFiveLastModified();
+    
+    List<Medium> findMediumByParentLocation(Location parentLocation);
 }

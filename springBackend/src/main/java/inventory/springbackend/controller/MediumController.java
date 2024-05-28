@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -44,6 +45,9 @@ public class MediumController {
 
     @GetMapping(path="/fiveLastModified")
     public List<Medium> displayFiveLastModified(){return mediumService.getFiveLastModified();}
+
+    @GetMapping(path="/parentLocation/{parentLocation}")
+    public List<Medium> displayMediumWithParentLocation(@PathVariable Long parentLocation){return mediumService.getMediumWithParentLocation(parentLocation);}
 
     @GetMapping(produces = MediaType.IMAGE_PNG_VALUE, path = "/showQR/{mediumId}")
     public byte[] showQRCode(@PathVariable Long mediumId) throws WriterException, IOException {

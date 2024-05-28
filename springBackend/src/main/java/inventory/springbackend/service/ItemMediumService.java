@@ -76,6 +76,8 @@ public class ItemMediumService {
 
     public List<Map<String, Object>> getItemMediumWithItemID(Long itemId){return itemMediumRepository.findItemMediumsWithItemID(itemId);}
 
+    public List<Map<String, Object>> getItemMediumInMedium(Long mediumId){return itemMediumRepository.findItemMediumsInMedium(mediumId);}
+
     public ItemMedium setArchived(Long itemId){
         Optional<ItemMedium> optionalExistingItemMedium = itemMediumRepository.findById(itemId);
 
@@ -87,6 +89,4 @@ public class ItemMediumService {
         }
         return null;
     }
-
-    public List<Map<String, Object>> getItemMediumInMedium(Long mediumId){return itemMediumRepository.findItemMediumsInMedium(mediumId);}
 }

@@ -51,11 +51,11 @@ public class ItemMediumController {
     @GetMapping(path="/itemId/{itemId}")
     public List<Map<String, Object>> displayItemMediumWithItemId(@PathVariable Long itemId){return itemMediumService.getItemMediumWithItemID(itemId);}
 
+    @GetMapping(path="/mediumId/{mediumId}")
+    public List<Map<String, Object>> displayItemMediumInMedium(@PathVariable Long mediumId){return itemMediumService.getItemMediumInMedium(mediumId);}
+
     @PostMapping(path="/setArchived/{itemId}")
     public ItemMedium setArchived(@PathVariable Long itemId) {
         return itemMediumService.setArchived(itemId);
     }
-
-    @GetMapping(path="/mediumId/{mediumId}")
-    public List<Map<String, Object>> displayItemMediumInMedium(@PathVariable Long mediumId){return itemMediumService.getItemMediumInMedium(mediumId);}
 }

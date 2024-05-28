@@ -4,6 +4,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import inventory.springbackend.entities.Location;
 import inventory.springbackend.entities.Medium;
 import inventory.springbackend.repository.LocationRepository;
 import inventory.springbackend.repository.MediumRepository;
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -92,6 +94,10 @@ public class MediumService {
     }
 
     public List<Medium> getFiveLastModified(){return mediumRepository.findFiveLastModified();}
+
+    public List<Medium> getMediumWithParentLocation(Long parentLocation){
+        return mediumRepository.findMediumByParentLocation(locationRepository.findByLocationId(parentLocation));
+    }
 
     public byte[] generateQRCode(Long mediumId) throws WriterException, IOException {
         int width = 200;
