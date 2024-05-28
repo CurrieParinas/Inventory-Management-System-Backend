@@ -30,8 +30,8 @@ public class ItemController {
     public Item addItem(@RequestParam("NAME") String name,
                         @RequestParam("DESCRIPTION") String description,
                         @RequestParam("BRAND") String brand,
-                        @RequestParam("CODENAME") String codename,
-                        @RequestPart("IMAGE") MultipartFile imageFile) throws IOException {
+                        @RequestParam(value = "CODENAME", required = false) String codename,
+                        @RequestPart(value = "IMAGE", required = false) MultipartFile imageFile) throws IOException {
         return itemService.addItem(name, description, brand, codename, imageFile);
     }
 

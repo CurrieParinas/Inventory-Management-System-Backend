@@ -75,11 +75,11 @@ public interface ItemMediumRepository extends JpaRepository<ItemMedium,Long> {
         List<Map<String, Object>> findItemMediumsWithItemID(Long itemId);
 
         @Query(
-                value = "SELECT IM.* " +
-                        "FROM ITEM_MEDIUM IM " +
+                value = "SELECT IM.*, I.NAME AS NAME " +
+                        "FROM ITEM_MEDIUM IM JOIN ITEM I ON IM.ITEM_ID = I.ITEM_ID " +
                         "WHERE IM.MEDIUM_ID IN ( " +
                         "    SELECT M.MEDIUM_ID " +
-                        "    FROM MEDIUM M\n" +
+                        "    FROM MEDIUM M " +
                         "    START WITH M.MEDIUM_ID = ? " +
                         "    CONNECT BY PRIOR M.MEDIUM_ID = M.PARENT_MEDIUM " +
                         ")",

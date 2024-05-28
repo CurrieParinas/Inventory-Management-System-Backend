@@ -28,8 +28,8 @@ public class LocationController {
     @PostMapping(path= "/add")
     public Location addLocation(@RequestParam("NAME") String name,
                                 @RequestParam("DESCRIPTION") String description,
-                                @RequestParam("PARENT_LOCATION") Long parentLocation,
-                                @RequestPart("IMAGE") MultipartFile imageFile) throws IOException {
+                                @RequestParam(value = "PARENT_LOCATION", required = false) Long parentLocation,
+                                @RequestPart(value = "IMAGE", required = false) MultipartFile imageFile) throws IOException {
         return locationService.addLocation(name, description, parentLocation, imageFile);
     }
 
