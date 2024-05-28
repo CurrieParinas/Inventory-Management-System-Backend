@@ -30,12 +30,10 @@ public class Medium {
     @Lob
     @JsonProperty("IMAGE")
     private byte[] image;
-    @JsonProperty("QR_CODE")
-    private String qrCode;
     @JsonProperty("PARENT_LOCATION")
     private Long parentLocation;
-    @JsonProperty("PARENT_MEDIUM_ID")
-    private Long parentMediumId;
+    @JsonProperty("PARENT_MEDIUM")
+    private Long parentMedium;
     @JsonProperty("PATH")
     private String path;
     @JsonProperty("CREATE_DATE")

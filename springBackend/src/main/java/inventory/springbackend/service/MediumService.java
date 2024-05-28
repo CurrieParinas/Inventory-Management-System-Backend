@@ -36,7 +36,7 @@ public class MediumService {
         med.setName(name);
         med.setDescription(description);
         med.setParentLocation(parentLocation);
-        med.setParentMediumId(parentMedium);
+        med.setParentMedium(parentMedium);
 
         if (parentMedium != null) {
             Medium parent = mediumRepository.findByMediumId(parentMedium);
@@ -73,11 +73,8 @@ public class MediumService {
             if(mediumToUpdate.getImage() != null){
                 existingMedium.setImage(mediumToUpdate.getImage());
             }
-            if(mediumToUpdate.getQrCode() != null){
-                existingMedium.setQrCode(mediumToUpdate.getQrCode());
-            }
-            if(mediumToUpdate.getParentMediumId() != null){
-                existingMedium.setParentMediumId(mediumToUpdate.getParentMediumId());
+            if(mediumToUpdate.getParentMedium() != null){
+                existingMedium.setParentMedium(mediumToUpdate.getParentMedium());
             }
             if(mediumToUpdate.getPath() != null){
                 existingMedium.setPath(mediumToUpdate.getPath());

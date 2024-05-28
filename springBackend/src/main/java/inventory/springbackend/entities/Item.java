@@ -34,10 +34,6 @@ public class Item {
     @Lob
     @JsonProperty("IMAGE")
     private byte[] image;
-    @JsonProperty("QR_CODE")
-    private String qrCode;
-    @JsonProperty("BAR_CODE")
-    private String barCode;
     @JsonProperty("CREATE_DATE")
     private Date createDate;
     @JsonProperty("LAST_MODIFIED")

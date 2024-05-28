@@ -77,12 +77,6 @@ public class ItemService {
             if(itemToUpdate.getImage() != null){
                 existingItem.setImage(itemToUpdate.getImage());
             }
-            if(itemToUpdate.getQrCode() != null){
-                existingItem.setQrCode(itemToUpdate.getQrCode());
-            }
-            if(itemToUpdate.getBarCode() != null){
-                existingItem.setBarCode(itemToUpdate.getBarCode());
-            }
 
             LocalDateTime currentDateTime = LocalDateTime.now();
             Date date = Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());

@@ -29,7 +29,7 @@ public class MediumController {
     public Medium addMedium(@RequestParam("NAME") String name,
                             @RequestParam("DESCRIPTION") String description,
                             @RequestParam("PARENT_LOCATION") Long parentLocation,
-                            @RequestParam("PARENT_MEDIUM_ID") Long parentMedium,
+                            @RequestParam("PARENT_MEDIUM") Long parentMedium,
                             @RequestPart("IMAGE") MultipartFile imageFile) throws IOException {
         return mediumService.addMedium(name, description, parentLocation, parentMedium, imageFile);
     }
