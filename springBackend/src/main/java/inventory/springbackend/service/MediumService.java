@@ -5,6 +5,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import inventory.springbackend.entities.Medium;
+import inventory.springbackend.repository.LocationRepository;
 import inventory.springbackend.repository.MediumRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MediumService {
     private final MediumRepository mediumRepository;
+    private final LocationRepository locationRepository;
 
     public List<Medium> getAllMediums(){return mediumRepository.findAll();}
 
@@ -35,8 +37,8 @@ public class MediumService {
         med.setMediumId(null);
         med.setName(name);
         med.setDescription(description);
-        med.setParentLocation(parentLocation);
-        med.setParentMedium(parentMedium);
+        med.setParentLocation(locationRepository.findByLocationId(parentLocation));
+        med.setParentMedium(mediumRepository.findByMediumId(parentMedium));
 
         if (parentMedium != null) {
             Medium parent = mediumRepository.findByMediumId(parentMedium);

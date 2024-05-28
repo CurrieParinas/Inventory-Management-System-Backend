@@ -30,10 +30,14 @@ public class Medium {
     @Lob
     @JsonProperty("IMAGE")
     private byte[] image;
+    @ManyToOne
+    @JoinColumn(name = "PARENT_LOCATION", referencedColumnName = "LOCATION_ID")
     @JsonProperty("PARENT_LOCATION")
-    private Long parentLocation;
+    private Location parentLocation;
+    @ManyToOne
+    @JoinColumn(name = "PARENT_MEDIUM", referencedColumnName = "MEDIUM_ID")
     @JsonProperty("PARENT_MEDIUM")
-    private Long parentMedium;
+    private Medium parentMedium;
     @JsonProperty("PATH")
     private String path;
     @JsonProperty("CREATE_DATE")

@@ -70,4 +70,6 @@ public class LocationService {
     }
 
     public List<Location> getFiveLastModified(){return locationRepository.findFiveLastModified();}
+
+    public List<Location> getLocationsWithNoParentLocation(){return locationRepository.findLocationWithNoParent();}
 }

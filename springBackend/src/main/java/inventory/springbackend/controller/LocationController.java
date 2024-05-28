@@ -52,4 +52,7 @@ public class LocationController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    @GetMapping(path="/locationsWithNoParent")
+    public List<Location> displayLocationsWithNoParentLocation(){return locationService.getLocationsWithNoParentLocation();}
 }

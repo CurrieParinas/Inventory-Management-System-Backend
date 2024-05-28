@@ -19,4 +19,12 @@ public interface LocationRepository extends JpaRepository<Location,Long> {
             nativeQuery = true
     )
     List<Location> findFiveLastModified();
+
+    @Query(
+            value = "SELECT * " +
+                    "FROM LOCATION " +
+                    "WHERE PARENT_LOCATION IS NULL",
+            nativeQuery = true
+    )
+    List<Location> findLocationWithNoParent();
 }
