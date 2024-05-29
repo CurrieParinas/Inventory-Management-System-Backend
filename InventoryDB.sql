@@ -96,41 +96,41 @@ CREATE SEQUENCE RECORD_SEQ
     MINVALUE 1;
 
 INSERT INTO PASSWORD (PASSWORD_ID, PASSWORD, CREATE_DATE, LAST_MODIFIED)
-            VALUES (1, 'imysm3000', sysdate, sysdate);
+            VALUES (PASSWORD_SEQ.nextval, 'imysm3000', sysdate, sysdate);
 
 INSERT INTO ITEM (ITEM_ID, NAME, DESCRIPTION, BRAND, CREATE_DATE, LAST_MODIFIED)
-            VALUES (1, 'Ballpen', 'For Writing', 'Panda', sysdate, sysdate);
+            VALUES (ITEM_SEQ.nextval, 'Ballpen', 'For Writing', 'Panda', sysdate, sysdate);
 INSERT INTO ITEM (ITEM_ID, NAME, DESCRIPTION, BRAND, CREATE_DATE, LAST_MODIFIED)
-            VALUES (2, 'Alcohol', 'For Sanitation', 'Green Cross', sysdate, sysdate);
+            VALUES (ITEM_SEQ.nextval, 'Alcohol', 'For Sanitation', 'Green Cross', sysdate, sysdate);
 INSERT INTO ITEM (ITEM_ID, NAME, DESCRIPTION, BRAND, CREATE_DATE, LAST_MODIFIED)
-            VALUES (3, 'Tissue', 'For Sipon', 'Shuta', sysdate, sysdate);
+            VALUES (ITEM_SEQ.nextval, 'Tissue', 'For Sipon', 'Shuta', sysdate, sysdate);
 
 INSERT INTO LOCATION (LOCATION_ID, NAME, DESCRIPTION, PARENT_LOCATION, CREATE_DATE, LAST_MODIFIED)
-            VALUES (1, 'Home', 'Valenzuela', null, sysdate, sysdate);
+            VALUES (LOCATION_SEQ.nextval, 'Home', 'Valenzuela', null, sysdate, sysdate);
 INSERT INTO LOCATION (LOCATION_ID, NAME, DESCRIPTION, PARENT_LOCATION, CREATE_DATE, LAST_MODIFIED)
-            VALUES (2, 'Living Room', 'Valenzuela', 1, sysdate, sysdate);
+            VALUES (LOCATION_SEQ.nextval, 'Living Room', 'Valenzuela', 1, sysdate, sysdate);
 INSERT INTO LOCATION (LOCATION_ID, NAME, DESCRIPTION, PARENT_LOCATION, CREATE_DATE, LAST_MODIFIED)
-            VALUES (3, 'Ron''s Room', 'Valenzuela', 1, sysdate, sysdate);
+            VALUES (LOCATION_SEQ.nextval, 'Ron''s Room', 'Valenzuela', 1, sysdate, sysdate);
 INSERT INTO LOCATION (LOCATION_ID, NAME, DESCRIPTION, PARENT_LOCATION, CREATE_DATE, LAST_MODIFIED)
-            VALUES (4, 'University', 'Manila', null, sysdate, sysdate);
+            VALUES (LOCATION_SEQ.nextval, 'University', 'Manila', null, sysdate, sysdate);
 
 INSERT INTO MEDIUM (MEDIUM_ID, NAME, DESCRIPTION, PARENT_LOCATION, PARENT_MEDIUM, PATH, CREATE_DATE, LAST_MODIFIED)
-            VALUES (1, 'Black Cabinet', 'Lalagyan', 3, null, null, sysdate, sysdate);
+            VALUES (MEDIUM_SEQ.nextval, 'Black Cabinet', 'Lalagyan', 3, null, null, sysdate, sysdate);
 INSERT INTO MEDIUM (MEDIUM_ID, NAME, DESCRIPTION, PARENT_LOCATION, PARENT_MEDIUM, PATH, CREATE_DATE, LAST_MODIFIED)
-            VALUES (2, 'Top Left Container', 'Lalagyan', 3, 1, 1, sysdate, sysdate);
+            VALUES (MEDIUM_SEQ.nextval, 'Top Left Container', 'Lalagyan', 3, 1, 1, sysdate, sysdate);
 INSERT INTO MEDIUM (MEDIUM_ID, NAME, DESCRIPTION, PARENT_LOCATION, PARENT_MEDIUM, PATH, CREATE_DATE, LAST_MODIFIED)
-            VALUES (3, 'Top Right Container', 'Lalagyan', 3, 1, 1, sysdate, sysdate);
+            VALUES (MEDIUM_SEQ.nextval, 'Top Right Container', 'Lalagyan', 3, 1, 1, sysdate, sysdate);
 INSERT INTO MEDIUM (MEDIUM_ID, NAME, DESCRIPTION, PARENT_LOCATION, PARENT_MEDIUM, PATH, CREATE_DATE, LAST_MODIFIED)
-            VALUES (4, 'Black Box', 'Lalagyan', 3, 2, '1,2', sysdate, sysdate);
+            VALUES (MEDIUM_SEQ.nextval, 'Black Box', 'Lalagyan', 3, 2, '1,2', sysdate, sysdate);
 INSERT INTO MEDIUM (MEDIUM_ID, NAME, DESCRIPTION, PARENT_LOCATION, PARENT_MEDIUM, PATH, CREATE_DATE, LAST_MODIFIED)
-            VALUES (5, 'Small Ring Box', 'Lalagyan', 3, 4, '1,2,4', sysdate, sysdate);
+            VALUES (MEDIUM_SEQ.nextval, 'Small Ring Box', 'Lalagyan', 3, 4, '1,2,4', sysdate, sysdate);
 
 INSERT INTO ITEM_MEDIUM (ITEM_MEDIUM_ID, ITEM_ID, MEDIUM_ID, ARCHIVE_STATUS, TYPE, STATUS, QUANTITY, START_CONSUMPTION_DATE, END_CONSUMPTION_DATE, CREATE_DATE, LAST_MODIFIED)
-            VALUES (1, 1, 4, 'V', 'R', null, 10, null, null, sysdate, sysdate);
+            VALUES (ITEM_MEDIUM_SEQ.nextval, 1, 4, 'V', 'R', null, 10, null, null, sysdate, sysdate);
 INSERT INTO ITEM_MEDIUM (ITEM_MEDIUM_ID, ITEM_ID, MEDIUM_ID, ARCHIVE_STATUS, TYPE, STATUS, QUANTITY, START_CONSUMPTION_DATE, END_CONSUMPTION_DATE, CREATE_DATE, LAST_MODIFIED)
-            VALUES (2, 2, 1, 'V', 'U', null, null, null, null, sysdate, sysdate);
+            VALUES (ITEM_MEDIUM_SEQ.nextval, 2, 1, 'V', 'U', null, null, null, null, sysdate, sysdate);
 INSERT INTO ITEM_MEDIUM (ITEM_MEDIUM_ID, ITEM_ID, MEDIUM_ID, ARCHIVE_STATUS, TYPE, STATUS, QUANTITY, START_CONSUMPTION_DATE, END_CONSUMPTION_DATE, CREATE_DATE, LAST_MODIFIED)
-            VALUES (3, 3, 3, 'V', 'R', null, 6, null, null, sysdate, sysdate);
+            VALUES (ITEM_MEDIUM_SEQ.nextval, 3, 3, 'V', 'R', null, 6, null, null, sysdate, sysdate);
 
 SELECT IM.ITEM_MEDIUM_ID, I.NAME, I.DESCRIPTION, I.BRAND, IM.QUANTITY
 FROM ITEM_MEDIUM IM JOIN ITEM I ON IM.ITEM_ID = I.ITEM_ID
@@ -195,6 +195,6 @@ FROM ITEM_MEDIUM IM JOIN ITEM I ON IM.ITEM_ID = I.ITEM_ID
 WHERE IM.ITEM_ID = ?;
 
 SELECT *
-FROM LOCATION;
+FROM MEDIUM;
 
 COMMIT;

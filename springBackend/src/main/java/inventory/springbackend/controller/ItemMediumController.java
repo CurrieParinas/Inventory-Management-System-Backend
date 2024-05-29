@@ -5,6 +5,7 @@ import inventory.springbackend.service.ItemMediumService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -21,8 +22,13 @@ public class ItemMediumController {
     public ItemMedium getItemMedium(@PathVariable Long itemMediumId){return itemMediumService.getItemMedium(itemMediumId);}
 
     @PostMapping(path= "/add")
-    public @ResponseBody ItemMedium addItemMedium(@RequestBody ItemMedium itemMediumToAdd){
-        return itemMediumService.addItemMedium(itemMediumToAdd);
+    public ItemMedium addItemMedium(@RequestParam("ITEM") Long item,
+                                    @RequestParam("MEDIUM") Long medium,
+                                    @RequestParam("TYPE") String type,
+                                    @RequestParam(value = "QUANTITY", required = false) Long quantity,
+                                    @RequestParam(value = "START_CONSUMPTION_DATE", required = false) Date startConsumptionDate,
+                                    @RequestParam(value = "END_CONSUMPTION_DATE", required = false) Date endConsumptionDate){
+        return itemMediumService.addItemMedium(item, medium, type, quantity, startConsumptionDate, endConsumptionDate);
     }
 
     @PostMapping(path="/delete/{itemMediumId}")

@@ -20,6 +20,6 @@ public interface MediumRepository extends JpaRepository<Medium,Long> {
             nativeQuery = true
     )
     List<Medium> findFiveLastModified();
-    
+
     List<Medium> findMediumByParentLocation(Location parentLocation);
 }

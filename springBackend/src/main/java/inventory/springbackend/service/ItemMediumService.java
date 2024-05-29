@@ -1,7 +1,10 @@
 package inventory.springbackend.service;
 
 import inventory.springbackend.entities.ItemMedium;
+import inventory.springbackend.entities.Medium;
 import inventory.springbackend.repository.ItemMediumRepository;
+import inventory.springbackend.repository.ItemRepository;
+import inventory.springbackend.repository.MediumRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,17 +19,27 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ItemMediumService {
     private final ItemMediumRepository itemMediumRepository;
+    private final ItemRepository itemRepository;
+    private final MediumRepository mediumRepository;
 
     public List<ItemMedium> getAllItemMediums(){return itemMediumRepository.findAll();}
 
     public ItemMedium getItemMedium(Long itemMediumId){return itemMediumRepository.findByItemMediumId(itemMediumId);}
 
-    public ItemMedium addItemMedium(ItemMedium itemMediumToAdd){
+    public ItemMedium addItemMedium(Long item, Long medium, String type, Long quantity, Date startConsumptionDate, Date endConsumptionDate){
+        ItemMedium itemMed = new ItemMedium();
+        itemMed.setItem(itemRepository.findByItemId(item));
+        itemMed.setMedium(mediumRepository.findByMediumId(medium));
+        itemMed.setType(type);
+        itemMed.setQuantity(quantity);
+        itemMed.setStartConsumptionDate(startConsumptionDate);
+        itemMed.setStartConsumptionDate(endConsumptionDate);
+
         LocalDateTime currentDateTime = LocalDateTime.now();
         Date date = Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());
-        itemMediumToAdd.setCreateDate(date);
-        itemMediumToAdd.setLastModified(date);
-        return itemMediumRepository.save(itemMediumToAdd);
+        itemMed.setCreateDate(date);
+        itemMed.setLastModified(date);
+        return itemMediumRepository.save(itemMed);
     }
     public void deleteItemMediumById(Long itemMediumId){itemMediumRepository.deleteById(itemMediumId);}
 
