@@ -102,4 +102,16 @@ public class ItemMediumService {
         }
         return null;
     }
+
+    public ItemMedium setVisible(Long itemId){
+        Optional<ItemMedium> optionalExistingItemMedium = itemMediumRepository.findById(itemId);
+
+        if(optionalExistingItemMedium.isPresent()){
+            ItemMedium existingItemMedium = optionalExistingItemMedium.get();
+            existingItemMedium.setArchiveStatus("V");
+
+            return itemMediumRepository.save(existingItemMedium);
+        }
+        return null;
+    }
 }

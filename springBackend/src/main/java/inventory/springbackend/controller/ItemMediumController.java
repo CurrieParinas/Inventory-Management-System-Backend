@@ -64,4 +64,9 @@ public class ItemMediumController {
     public ItemMedium setArchived(@PathVariable Long itemId) {
         return itemMediumService.setArchived(itemId);
     }
+
+    @PostMapping(path="/setVisible/{itemId}")
+    public ItemMedium setVisible(@PathVariable Long itemId) {
+        return itemMediumService.setVisible(itemId);
+    }
 }
