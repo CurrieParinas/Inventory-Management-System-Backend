@@ -40,9 +40,9 @@ public class MediumService {
         med.setName(name);
         med.setDescription(description);
         med.setParentLocation(locationRepository.findByLocationId(parentLocation));
-        med.setParentMedium(mediumRepository.findByMediumId(parentMedium));
 
         if (parentMedium != null) {
+            med.setParentMedium(mediumRepository.findByMediumId(parentMedium));
             Medium parent = mediumRepository.findByMediumId(parentMedium);
             if (parent.getPath() != null) {
                 med.setPath(parent.getPath() + "," + parent.getMediumId());
@@ -51,8 +51,10 @@ public class MediumService {
             }
         }
 
-        byte[] imageData = image.getBytes();
-        med.setImage(imageData);
+        if (image != null) {
+            byte[] imageData = image.getBytes();
+            med.setImage(imageData);
+        }
 
         LocalDateTime currentDateTime = LocalDateTime.now();
         Date date = Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());

@@ -42,10 +42,15 @@ public class ItemService {
         item.setName(name);
         item.setDescription(description);
         item.setBrand(brand);
-        item.setCodename(codename);
 
-        byte[] imageData = image.getBytes();
-        item.setImage(imageData);
+        if (codename != null && !codename.trim().isEmpty()) {
+            item.setCodename(codename);
+        }
+
+        if (image != null) {
+            byte[] imageData = image.getBytes();
+            item.setImage(imageData);
+        }
 
         LocalDateTime currentDateTime = LocalDateTime.now();
         Date date = Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());

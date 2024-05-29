@@ -3,8 +3,10 @@ package inventory.springbackend.controller;
 import inventory.springbackend.entities.ItemMedium;
 import inventory.springbackend.service.ItemMediumService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -26,9 +28,9 @@ public class ItemMediumController {
                                     @RequestParam("MEDIUM") Long medium,
                                     @RequestParam("TYPE") String type,
                                     @RequestParam(value = "QUANTITY", required = false) Long quantity,
-                                    @RequestParam(value = "START_CONSUMPTION_DATE", required = false) Date startConsumptionDate,
-                                    @RequestParam(value = "END_CONSUMPTION_DATE", required = false) Date endConsumptionDate){
-        return itemMediumService.addItemMedium(item, medium, type, quantity, startConsumptionDate, endConsumptionDate);
+                                    @RequestParam(value = "START_CONSUMPTION_DATE", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String startConsumptionDateStr,
+                                    @RequestParam(value = "END_CONSUMPTION_DATE", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String endConsumptionDateStr) throws ParseException {
+        return itemMediumService.addItemMedium(item, medium, type, quantity, startConsumptionDateStr, endConsumptionDateStr);
     }
 
     @PostMapping(path="/delete/{itemMediumId}")

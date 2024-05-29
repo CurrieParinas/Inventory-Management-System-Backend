@@ -30,8 +30,10 @@ public class LocationService {
         loc.setDescription(description);
         loc.setParentLocation(locationRepository.findByLocationId(parentLocation));
 
-        byte[] imageData = image.getBytes();
-        loc.setImage(imageData);
+        if (image != null) {
+            byte[] imageData = image.getBytes();
+            loc.setImage(imageData);
+        }
 
         LocalDateTime currentDateTime = LocalDateTime.now();
         Date date = Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());

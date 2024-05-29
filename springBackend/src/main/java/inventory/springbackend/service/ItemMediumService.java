@@ -8,12 +8,14 @@ import inventory.springbackend.repository.MediumRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.text.SimpleDateFormat;
 
 @Service
 @RequiredArgsConstructor
@@ -26,14 +28,29 @@ public class ItemMediumService {
 
     public ItemMedium getItemMedium(Long itemMediumId){return itemMediumRepository.findByItemMediumId(itemMediumId);}
 
-    public ItemMedium addItemMedium(Long item, Long medium, String type, Long quantity, Date startConsumptionDate, Date endConsumptionDate){
+    public ItemMedium addItemMedium(Long item, Long medium, String type, Long quantity, String startConsumptionDateStr, String endConsumptionDateStr) throws ParseException {
         ItemMedium itemMed = new ItemMedium();
         itemMed.setItem(itemRepository.findByItemId(item));
         itemMed.setMedium(mediumRepository.findByMediumId(medium));
+        itemMed.setArchiveStatus("V");
         itemMed.setType(type);
-        itemMed.setQuantity(quantity);
-        itemMed.setStartConsumptionDate(startConsumptionDate);
-        itemMed.setStartConsumptionDate(endConsumptionDate);
+
+        if (quantity != null) {
+            itemMed.setQuantity(quantity);
+        }
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date startConsumptionDate;
+        Date endConsumptionDate;
+
+        if (startConsumptionDateStr != null && !startConsumptionDateStr.trim().isEmpty()) {
+            startConsumptionDate = formatter.parse(startConsumptionDateStr);
+            itemMed.setStartConsumptionDate(startConsumptionDate);
+        }
+        if (endConsumptionDateStr != null && !endConsumptionDateStr.trim().isEmpty()) {
+            endConsumptionDate = formatter.parse(endConsumptionDateStr);
+            itemMed.setEndConsumptionDate(endConsumptionDate);
+        }
 
         LocalDateTime currentDateTime = LocalDateTime.now();
         Date date = Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());
