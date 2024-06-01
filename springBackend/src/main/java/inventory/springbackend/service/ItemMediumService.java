@@ -131,4 +131,37 @@ public class ItemMediumService {
         }
         return null;
     }
+
+    public ItemMedium addQuantity(Long itemId, Long quantity) {
+        Optional<ItemMedium> optionalExistingItemMedium = itemMediumRepository.findById(itemId);
+
+        if (optionalExistingItemMedium.isPresent()) {
+            ItemMedium existingItemMedium = optionalExistingItemMedium.get();
+            Long currentQuantity = existingItemMedium.getQuantity();
+            Long newQuantity = currentQuantity + quantity;
+            existingItemMedium.setQuantity(newQuantity);
+
+            return itemMediumRepository.save(existingItemMedium);
+        }
+        return null;
+    }
+
+    public ItemMedium subtractQuantity(Long itemId, Long quantity) {
+        Optional<ItemMedium> optionalExistingItemMedium = itemMediumRepository.findById(itemId);
+
+        if (optionalExistingItemMedium.isPresent()) {
+            ItemMedium existingItemMedium = optionalExistingItemMedium.get();
+            Long currentQuantity = existingItemMedium.getQuantity();
+            Long newQuantity = currentQuantity - quantity;
+
+            if (newQuantity < 0) {
+                newQuantity = 0L;
+            }
+
+            existingItemMedium.setQuantity(newQuantity);
+
+            return itemMediumRepository.save(existingItemMedium);
+        }
+        return null;
+    }
 }

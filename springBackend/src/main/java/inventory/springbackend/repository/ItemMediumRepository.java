@@ -43,7 +43,7 @@ public interface ItemMediumRepository extends JpaRepository<ItemMedium,Long> {
         List<Map<String, Object>> findAllUntrackedItems();
 
         @Query(
-                value = "SELECT ITEM_MEDIUM_ID, I.NAME, I.CODENAME, I.BRAND, IM.QUANTITY, M.NAME AS MEDIUM_NAME, L.NAME AS LOCATION_NAME, IM.CREATE_DATE, IM.LAST_MODIFIED " +
+                value = "SELECT ITEM_MEDIUM_ID, I.NAME, I.CODENAME, I.BRAND, IM.QUANTITY, M.NAME AS MEDIUM_NAME, L.NAME AS LOCATION_NAME, IM.CREATE_DATE, IM.LAST_MODIFIED, IM.START_CONSUMPTION_DATE, IM.END_CONSUMPTION_DATE " +
                         "FROM ITEM_MEDIUM IM JOIN ITEM I ON IM.ITEM_ID = I.ITEM_ID " +
                         "                    JOIN MEDIUM M on IM.MEDIUM_ID = M.MEDIUM_ID " +
                         "                    JOIN LOCATION L ON M.PARENT_LOCATION = L.LOCATION_ID " +
@@ -54,7 +54,7 @@ public interface ItemMediumRepository extends JpaRepository<ItemMedium,Long> {
         List<Map<String, Object>> findAllTrackedItems();
 
         @Query(
-                value = "SELECT ITEM_MEDIUM_ID, I.NAME, I.CODENAME, I.BRAND, IM.QUANTITY, M.NAME AS MEDIUM_NAME, L.NAME AS LOCATION_NAME, IM.CREATE_DATE, IM.LAST_MODIFIED " +
+                value = "SELECT ITEM_MEDIUM_ID, I.NAME, I.CODENAME, I.BRAND, IM.QUANTITY, M.NAME AS MEDIUM_NAME, L.NAME AS LOCATION_NAME, IM.CREATE_DATE, IM.LAST_MODIFIED, IM.START_CONSUMPTION_DATE, IM.END_CONSUMPTION_DATE " +
                         "FROM ITEM_MEDIUM IM JOIN ITEM I ON IM.ITEM_ID = I.ITEM_ID " +
                         "                    JOIN MEDIUM M on IM.MEDIUM_ID = M.MEDIUM_ID " +
                         "                    JOIN LOCATION L ON M.PARENT_LOCATION = L.LOCATION_ID " +

@@ -71,4 +71,14 @@ public class ItemMediumController {
     public ItemMedium setVisible(@PathVariable Long itemId) {
         return itemMediumService.setVisible(itemId);
     }
+
+    @PostMapping(path="/addQuantity/{itemId}/{quantity}")
+    public ItemMedium addQuantity(@PathVariable Long itemId, @PathVariable Long quantity) {
+        return itemMediumService.addQuantity(itemId, quantity);
+    }
+
+    @PostMapping(path="/subtractQuantity/{itemId}/{quantity}")
+    public ItemMedium subtractQuantity(@PathVariable Long itemId, @PathVariable Long quantity) {
+        return itemMediumService.subtractQuantity(itemId, quantity);
+    }
 }
