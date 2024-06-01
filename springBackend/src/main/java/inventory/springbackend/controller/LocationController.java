@@ -36,9 +36,13 @@ public class LocationController {
     @PostMapping(path="/delete/{locationId}")
     public void deleteLocationById(@PathVariable Long locationId){locationService.deleteLocationById(locationId);}
 
-    @PostMapping(path="/update")
-    public @ResponseBody Location updateLocation(@RequestBody Location locationToUpdate){
-        return locationService.updateLocation(locationToUpdate);
+    @PutMapping(path="/update/{locationId}")
+    public Location updateLocation(@PathVariable Long locationId,
+                                   @RequestParam(value = "NAME", required = false) String name,
+                                   @RequestParam(value = "DESCRIPTION", required = false) String description,
+                                   @RequestParam(value = "PARENT_LOCATION", required = false) Long parentLocation,
+                                   @RequestPart(value = "IMAGE", required = false) MultipartFile imageFile) throws IOException {
+        return locationService.updateLocation(locationId, name, description, parentLocation, imageFile);
     }
 
     @GetMapping(path="/fiveLastModified")

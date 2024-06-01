@@ -38,9 +38,14 @@ public class MediumController {
     @PostMapping(path="/delete/{mediumId}")
     public void deleteMediumById(@PathVariable Long mediumId){mediumService.deleteMediumById(mediumId);}
 
-    @PostMapping(path="/update")
-    public @ResponseBody Medium updateMedium(@RequestBody Medium mediumToUpdate){
-        return mediumService.updateMedium(mediumToUpdate);
+    @PutMapping(path="/update/{mediumId}")
+    public Medium updateMedium(@PathVariable Long mediumId,
+                               @RequestParam(value = "NAME", required = false) String name,
+                               @RequestParam(value = "DESCRIPTION", required = false) String description,
+                               @RequestParam(value = "PARENT_LOCATION", required = false) Long parentLocation,
+                               @RequestParam(value = "PARENT_MEDIUM", required = false) Long parentMedium,
+                               @RequestPart(value = "IMAGE", required = false) MultipartFile imageFile) throws IOException {
+        return mediumService.updateMedium(mediumId, name, description, parentLocation, parentMedium, imageFile);
     }
 
     @GetMapping(path="/fiveLastModified")

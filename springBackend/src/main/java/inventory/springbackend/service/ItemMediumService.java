@@ -141,6 +141,10 @@ public class ItemMediumService {
             Long newQuantity = currentQuantity + quantity;
             existingItemMedium.setQuantity(newQuantity);
 
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            Date date = Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());
+            existingItemMedium.setLastModified(date);
+
             return itemMediumRepository.save(existingItemMedium);
         }
         return null;
@@ -159,6 +163,10 @@ public class ItemMediumService {
             }
 
             existingItemMedium.setQuantity(newQuantity);
+
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            Date date = Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());
+            existingItemMedium.setLastModified(date);
 
             return itemMediumRepository.save(existingItemMedium);
         }

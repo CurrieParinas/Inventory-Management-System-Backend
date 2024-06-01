@@ -18,7 +18,7 @@ import java.util.Optional;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/item")
-public class ItemController {
+public class    ItemController {
     private final ItemService itemService;
     @GetMapping(path="/all")
     public List<Item> displayItems(){return itemService.getAllItems();}
@@ -38,9 +38,14 @@ public class ItemController {
     @PostMapping(path="/delete/{itemId}")
     public void deleteItemById(@PathVariable Long itemId){itemService.deleteItemById(itemId);}
 
-    @PostMapping(path="/update")
-    public @ResponseBody Item updateItem(@RequestBody Item itemToUpdate){
-        return itemService.updateItem(itemToUpdate);
+    @PutMapping(path="/update/{itemId}")
+    public Item updateItem(@PathVariable Long itemId,
+                           @RequestParam(value = "NAME", required = false) String name,
+                           @RequestParam(value = "DESCRIPTION", required = false) String description,
+                           @RequestParam(value = "BRAND", required = false) String brand,
+                           @RequestParam(value = "CODENAME", required = false) String codename,
+                           @RequestPart(value = "IMAGE", required = false) MultipartFile imageFile) throws IOException {
+        return itemService.updateItem(itemId, name, description, brand, codename, imageFile);
     }
 
     @GetMapping(produces = MediaType.IMAGE_PNG_VALUE, path = "/showQR/{itemId}")

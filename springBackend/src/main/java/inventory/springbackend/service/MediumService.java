@@ -40,7 +40,6 @@ public class MediumService {
         med.setName(name);
         med.setDescription(description);
         med.setParentLocation(locationRepository.findByLocationId(parentLocation));
-
         if (parentMedium != null) {
             med.setParentMedium(mediumRepository.findByMediumId(parentMedium));
             Medium parent = mediumRepository.findByMediumId(parentMedium);
@@ -50,7 +49,6 @@ public class MediumService {
                 med.setPath(String.valueOf(parent.getMediumId()));
             }
         }
-
         if (image != null) {
             byte[] imageData = image.getBytes();
             med.setImage(imageData);
@@ -64,26 +62,36 @@ public class MediumService {
     }
     public void deleteMediumById(Long mediumId){mediumRepository.deleteById(mediumId);}
 
-    public Medium updateMedium(Medium mediumToUpdate){
-        Optional<Medium> optionalExistingMedium = mediumRepository.findById(mediumToUpdate.getMediumId());
+    public Medium updateMedium(Long mediumId, String name, String description, Long parentLocation, Long parentMedium, MultipartFile image) throws IOException {
+        Optional<Medium> optionalExistingMedium = mediumRepository.findById(mediumId);
 
         if(optionalExistingMedium.isPresent()){
             Medium existingMedium = optionalExistingMedium.get();
 
-            if(mediumToUpdate.getName() != null){
-                existingMedium.setName(mediumToUpdate.getName());
+            if (name != null && !name.trim().isEmpty()){
+                existingMedium.setName(name);
             }
-            if(mediumToUpdate.getDescription() != null){
-                existingMedium.setDescription(mediumToUpdate.getDescription());
+            if (description != null && !description.trim().isEmpty()){
+                existingMedium.setDescription(description);
             }
-            if(mediumToUpdate.getImage() != null){
-                existingMedium.setImage(mediumToUpdate.getImage());
+            if (parentLocation != null){
+                existingMedium.setParentLocation(locationRepository.findByLocationId(parentLocation));
             }
-            if(mediumToUpdate.getParentMedium() != null){
-                existingMedium.setParentMedium(mediumToUpdate.getParentMedium());
+            if (parentMedium != null){
+                existingMedium.setParentMedium(mediumRepository.findByMediumId(parentMedium));
             }
-            if(mediumToUpdate.getPath() != null){
-                existingMedium.setPath(mediumToUpdate.getPath());
+            if (parentMedium != null) {
+                existingMedium.setParentMedium(mediumRepository.findByMediumId(parentMedium));
+                Medium parent = mediumRepository.findByMediumId(parentMedium);
+                if (parent.getPath() != null) {
+                    existingMedium.setPath(parent.getPath() + "," + parent.getMediumId());
+                } else {
+                    existingMedium.setPath(String.valueOf(parent.getMediumId()));
+                }
+            }
+            if(image != null){
+                byte[] imageData = image.getBytes();
+                existingMedium.setImage(imageData);
             }
 
             LocalDateTime currentDateTime = LocalDateTime.now();

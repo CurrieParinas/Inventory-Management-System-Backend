@@ -43,23 +43,24 @@ public class LocationService {
     }
     public void deleteLocationById(Long locationId){locationRepository.deleteById(locationId);}
 
-    public Location updateLocation(Location locationToUpdate){
-        Optional<Location> optionalExistingLocation = locationRepository.findById(locationToUpdate.getLocationId());
+    public Location updateLocation(Long locationId, String name, String description, Long parentLocation, MultipartFile image) throws IOException {
+        Optional<Location> optionalExistingLocation = locationRepository.findById(locationId);
 
         if(optionalExistingLocation.isPresent()){
             Location existingLocation = optionalExistingLocation.get();
 
-            if(locationToUpdate.getName() != null){
-                existingLocation.setName(locationToUpdate.getName());
+            if (name != null && !name.trim().isEmpty()){
+                existingLocation.setName(name);
             }
-            if(locationToUpdate.getDescription() != null){
-                existingLocation.setDescription(locationToUpdate.getDescription());
+            if (description != null && !description.trim().isEmpty()){
+                existingLocation.setDescription(description);
             }
-            if(locationToUpdate.getImage() != null){
-                existingLocation.setImage(locationToUpdate.getImage());
+            if (parentLocation != null){
+                existingLocation.setParentLocation(locationRepository.findByLocationId(parentLocation));
             }
-            if(locationToUpdate.getParentLocation() != null){
-                existingLocation.setParentLocation(locationToUpdate.getParentLocation());
+            if (image != null){
+                byte[] imageData = image.getBytes();
+                existingLocation.setImage(imageData);
             }
 
             LocalDateTime currentDateTime = LocalDateTime.now();

@@ -18,6 +18,8 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -61,26 +63,29 @@ public class ItemService {
     }
     public void deleteItemById(Long itemId){itemRepository.deleteById(itemId);}
 
-    public Item updateItem(Item itemToUpdate){
-        Optional<Item> optionalExistingItem = itemRepository.findById(itemToUpdate.getItemId());
+    public Item updateItem(Long itemId, String name, String description, String brand, String codename, MultipartFile image) throws IOException {
+        Optional<Item> optionalExistingItem = itemRepository.findById(itemId);
 
         if(optionalExistingItem.isPresent()){
             Item existingItem = optionalExistingItem.get();
 
-            if(itemToUpdate.getName() != null){
-                existingItem.setName(itemToUpdate.getName());
+            if (name != null && !name.trim().isEmpty()){
+                existingItem.setName(name);
             }
-            if(itemToUpdate.getDescription() != null){
-                existingItem.setDescription(itemToUpdate.getDescription());
+            if (description != null && !description.trim().isEmpty()){
+                existingItem.setDescription(description);
             }
-            if(itemToUpdate.getBrand() != null){
-                existingItem.setBrand(itemToUpdate.getBrand());
+            if (brand != null && !brand.trim().isEmpty()){
+                existingItem.setBrand(brand);
             }
-            if(itemToUpdate.getCodename() != null){
-                existingItem.setCodename(itemToUpdate.getCodename());
+            if (codename != null && !codename.trim().isEmpty()){
+                existingItem.setCodename(codename);
+            } else {
+                existingItem.setCodename(null);
             }
-            if(itemToUpdate.getImage() != null){
-                existingItem.setImage(itemToUpdate.getImage());
+            if (image != null){
+                byte[] imageData = image.getBytes();
+                existingItem.setImage(imageData);
             }
 
             LocalDateTime currentDateTime = LocalDateTime.now();
