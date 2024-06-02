@@ -105,7 +105,11 @@ public class MediumService {
 
     public List<Medium> getFiveLastModified(){return mediumRepository.findFiveLastModified();}
 
-    public List<Map<String, Object>> getAvailableMediumsForEdit(Long parentLocation, Long medium){
+    public List<Medium> getMediumWithParentLocation(Long parentLocation) {
+        return mediumRepository.findMediumByParentLocation(locationRepository.findByLocationId(parentLocation));
+    }
+
+    public List<Medium> getAvailableMediumsForEdit(Long parentLocation, Long medium){
         return mediumRepository.findAvailableMediumsForEdit(parentLocation, medium);
     }
 

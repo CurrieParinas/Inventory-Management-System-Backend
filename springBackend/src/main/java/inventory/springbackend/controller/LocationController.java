@@ -59,4 +59,7 @@ public class LocationController {
 
     @GetMapping(path="/locationsWithNoParent")
     public List<Location> displayLocationsWithNoParentLocation(){return locationService.getLocationsWithNoParentLocation();}
+
+    @GetMapping(path="/availableLocationsForEdit/{locationId}")
+    public List<Location> displayLocationsWithNoParentLocation(@PathVariable Long locationId){return locationService.getAvailableLocationsForEdit(locationId);}
 }

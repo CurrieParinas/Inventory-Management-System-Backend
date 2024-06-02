@@ -21,6 +21,8 @@ public interface MediumRepository extends JpaRepository<Medium,Long> {
     )
     List<Medium> findFiveLastModified();
 
+    List<Medium> findMediumByParentLocation(Location parentLocation);
+
     @Query(
             value = "SELECT * " +
                     "FROM MEDIUM " +
@@ -31,5 +33,5 @@ public interface MediumRepository extends JpaRepository<Medium,Long> {
                     "    CONNECT BY PRIOR M.MEDIUM_ID = M.PARENT_MEDIUM)",
             nativeQuery = true
     )
-    List<Map<String, Object>> findAvailableMediumsForEdit(Long parentLocation, Long medium);
+    List<Medium> findAvailableMediumsForEdit(Long parentLocation, Long medium);
 }

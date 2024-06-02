@@ -74,5 +74,13 @@ public class LocationService {
 
     public List<Location> getFiveLastModified(){return locationRepository.findFiveLastModified();}
 
-    public List<Location> getLocationsWithNoParentLocation(){return locationRepository.findLocationWithNoParent();}
+    public List<Location> getLocationsWithNoParentLocation(){return locationRepository.findLocationsWithNoParent();}
+
+    public List<Location> getAvailableLocationsForEdit(Long locationId){
+        if (locationRepository.countChildren(locationId) == 0) {
+            return locationRepository.findAvailableLocationsForEdit(locationId);
+        } else {
+            return null;
+        }
+    }
 }

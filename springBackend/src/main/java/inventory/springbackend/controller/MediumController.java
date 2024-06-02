@@ -51,8 +51,11 @@ public class MediumController {
     @GetMapping(path="/fiveLastModified")
     public List<Medium> displayFiveLastModified(){return mediumService.getFiveLastModified();}
 
-    @GetMapping(path="/parentLocation/{parentLocation}/medium/{medium}")
-    public List<Map<String, Object>> displayAvailableMediumsForEdit(@PathVariable Long parentLocation, @PathVariable Long medium){return mediumService.getAvailableMediumsForEdit(parentLocation, medium);}
+    @GetMapping(path="/parentLocation/{parentLocation}")
+    public List<Medium> displayMediumWithParentLocation(@PathVariable Long parentLocation){return mediumService.getMediumWithParentLocation(parentLocation);}
+
+    @GetMapping(path="/parentLocation/{parentLocation}/mediumId/{mediumId}")
+    public List<Medium> displayAvailableMediumsForEdit(@PathVariable Long parentLocation, @PathVariable Long mediumId){return mediumService.getAvailableMediumsForEdit(parentLocation, mediumId);}
 
     @GetMapping(produces = MediaType.IMAGE_PNG_VALUE, path = "/showQR/{mediumId}")
     public byte[] showQRCode(@PathVariable Long mediumId) throws WriterException, IOException {
