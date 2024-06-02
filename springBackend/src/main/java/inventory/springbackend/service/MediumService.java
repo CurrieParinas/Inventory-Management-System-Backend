@@ -105,8 +105,8 @@ public class MediumService {
 
     public List<Medium> getFiveLastModified(){return mediumRepository.findFiveLastModified();}
 
-    public List<Medium> getMediumWithParentLocation(Long parentLocation){
-        return mediumRepository.findMediumByParentLocation(locationRepository.findByLocationId(parentLocation));
+    public List<Map<String, Object>> getAvailableMediumsForEdit(Long parentLocation, Long medium){
+        return mediumRepository.findAvailableMediumsForEdit(parentLocation, medium);
     }
 
     public byte[] generateQRCode(Long mediumId) throws WriterException, IOException {
@@ -117,7 +117,7 @@ public class MediumService {
 
         if(optionalExistingMedium.isPresent()) {
             Medium existingMedium = optionalExistingMedium.get();
-            String text = "ID: " + existingMedium.getMediumId() + "\nNAME: " + existingMedium.getName() + "\nDESCRIPTION: " + existingMedium.getDescription() + "\nTYPE: Storage Medium";
+            String text = "ID: " + existingMedium.getMediumId() + "\nNAME: " + existingMedium.getName() + "\nDESCRIPTION: " + existingMedium.getDescription() + "\nLOCATION: " + existingMedium.getParentLocation().getName() + "\nTYPE: Storage Medium";
 
             QRCodeWriter qrCodeWriter = new QRCodeWriter();
             BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);

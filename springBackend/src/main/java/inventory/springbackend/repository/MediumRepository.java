@@ -21,5 +21,15 @@ public interface MediumRepository extends JpaRepository<Medium,Long> {
     )
     List<Medium> findFiveLastModified();
 
-    List<Medium> findMediumByParentLocation(Location parentLocation);
+    @Query(
+            value = "SELECT * " +
+                    "FROM MEDIUM " +
+                    "WHERE PARENT_LOCATION = ? AND MEDIUM_ID NOT IN ( " +
+                    "    SELECT M.MEDIUM_ID " +
+                    "    FROM MEDIUM M " +
+                    "    START WITH M.MEDIUM_ID = ? " +
+                    "    CONNECT BY PRIOR M.MEDIUM_ID = M.PARENT_MEDIUM)",
+            nativeQuery = true
+    )
+    List<Map<String, Object>> findAvailableMediumsForEdit(Long parentLocation, Long medium);
 }

@@ -18,7 +18,7 @@ import java.util.Optional;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/item")
-public class    ItemController {
+public class ItemController {
     private final ItemService itemService;
     @GetMapping(path="/all")
     public List<Item> displayItems(){return itemService.getAllItems();}
@@ -48,14 +48,14 @@ public class    ItemController {
         return itemService.updateItem(itemId, name, description, brand, codename, imageFile);
     }
 
-    @GetMapping(produces = MediaType.IMAGE_PNG_VALUE, path = "/showQR/{itemId}")
-    public byte[] showQRCode(@PathVariable Long itemId) throws WriterException, IOException {
-        return itemService.generateQRCode(itemId);
+    @GetMapping(produces = MediaType.IMAGE_JPEG_VALUE, path = "/showQR/{itemId}")
+    public ResponseEntity<byte[]> showQRCode(@PathVariable Long itemId) throws WriterException, IOException {
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(itemService.generateQRCode(itemId));
     }
 
-    @GetMapping(produces = MediaType.IMAGE_PNG_VALUE, path = "/showBar/{itemId}")
-    public byte[] showBarcode(@PathVariable Long itemId) throws WriterException, IOException {
-        return itemService.generateBarcode(itemId);
+    @GetMapping(produces = MediaType.IMAGE_JPEG_VALUE, path = "/showBar/{itemId}")
+    public ResponseEntity<byte[]> showBarcode(@PathVariable Long itemId) throws WriterException, IOException {
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(itemService.generateBarcode(itemId));
     }
 
     @GetMapping(produces = MediaType.IMAGE_JPEG_VALUE, path="/showImage/{itemId}")
