@@ -36,9 +36,14 @@ public class ItemMediumController {
     @PostMapping(path="/delete/{itemMediumId}")
     public void deleteItemMediumById(@PathVariable Long itemMediumId){itemMediumService.deleteItemMediumById(itemMediumId);}
 
-    @PostMapping(path="/update")
-    public @ResponseBody ItemMedium updateItemMedium(@RequestBody ItemMedium itemMediumToUpdate){
-        return itemMediumService.updateItemMedium(itemMediumToUpdate);
+    @PutMapping(path="/update/{itemMediumId}")
+    public ItemMedium updateItemMedium(@PathVariable Long itemMediumId,
+                                       @RequestParam(value = "MEDIUM", required = false) Long medium,
+                                       @RequestParam(value = "TYPE", required = false) String type,
+                                       @RequestParam(value = "QUANTITY", required = false) Long quantity,
+                                       @RequestParam(value = "START_CONSUMPTION_DATE", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String startConsumptionDateStr,
+                                       @RequestParam(value = "END_CONSUMPTION_DATE", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String endConsumptionDateStr) throws ParseException {
+        return itemMediumService.updateItemMedium(itemMediumId, medium, type, quantity, startConsumptionDateStr, endConsumptionDateStr);
     }
 
     @GetMapping(path="/fiveLastModifiedUntracked")

@@ -60,29 +60,32 @@ public class ItemMediumService {
     }
     public void deleteItemMediumById(Long itemMediumId){itemMediumRepository.deleteById(itemMediumId);}
 
-    public ItemMedium updateItemMedium(ItemMedium itemMediumToUpdate){
-        Optional<ItemMedium> optionalExistingItemMedium = itemMediumRepository.findById(itemMediumToUpdate.getItemMediumId());
+    public ItemMedium updateItemMedium(Long itemMediumId, Long medium, String type, Long quantity, String startConsumptionDateStr, String endConsumptionDateStr) throws ParseException {
+            Optional<ItemMedium> optionalExistingItemMedium = itemMediumRepository.findById(itemMediumId);
 
         if(optionalExistingItemMedium.isPresent()){
             ItemMedium existingItemMedium = optionalExistingItemMedium.get();
 
-            if(itemMediumToUpdate.getArchiveStatus() != null){
-                existingItemMedium.setArchiveStatus(itemMediumToUpdate.getArchiveStatus());
+            if (medium != null){
+                existingItemMedium.setMedium(mediumRepository.findByMediumId(medium));
             }
-            if(itemMediumToUpdate.getType() != null){
-                existingItemMedium.setType(itemMediumToUpdate.getType());
+            if (type != null && !type.trim().isEmpty()){
+                existingItemMedium.setType(type);
             }
-            if(itemMediumToUpdate.getStatus() != null){
-                existingItemMedium.setStatus(itemMediumToUpdate.getStatus());
+            if (quantity != null){
+                existingItemMedium.setQuantity(quantity);
             }
-            if(itemMediumToUpdate.getQuantity() != null){
-                existingItemMedium.setQuantity(itemMediumToUpdate.getQuantity());
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date startConsumptionDate;
+            Date endConsumptionDate;
+
+            if (startConsumptionDateStr != null && !startConsumptionDateStr.trim().isEmpty()) {
+                startConsumptionDate = formatter.parse(startConsumptionDateStr);
+                existingItemMedium.setStartConsumptionDate(startConsumptionDate);
             }
-            if(itemMediumToUpdate.getStartConsumptionDate() != null){
-                existingItemMedium.setStartConsumptionDate(itemMediumToUpdate.getStartConsumptionDate());
-            }
-            if(itemMediumToUpdate.getEndConsumptionDate() != null){
-                existingItemMedium.setEndConsumptionDate(itemMediumToUpdate.getEndConsumptionDate());
+            if (endConsumptionDateStr != null && !endConsumptionDateStr.trim().isEmpty()) {
+                endConsumptionDate = formatter.parse(endConsumptionDateStr);
+                existingItemMedium.setEndConsumptionDate(endConsumptionDate);
             }
 
             LocalDateTime currentDateTime = LocalDateTime.now();
